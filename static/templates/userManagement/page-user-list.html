@@ -1,0 +1,102 @@
+{% extends 'base/index.html' %}
+
+{% block title %}Lista Utenti{% endblock %}
+
+
+
+{% block content %}
+
+    {% if messages %}
+        {% for message in messages  %}
+            <div class="row">
+                {% if forloop.first %}
+                <div {% if message.tags %}class="alert alert-{{ message.tags }} alert-dismissable"{% endif %} id="close">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <strong>{{ message }}</strong>
+                </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% include 'base/settingButton.html' %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-color panel-tabs panel-default-site">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h3 class="panel-title">Tabella Username</h3>
+                            </div>
+                            <div class="col-xs-6">
+                                <h3 class="panel-title pull-right">Gestione Utenti</h3>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                    <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card-box table-responsive">
+                                    <div class="col-sm-6">
+                                      <div class="m-b-30">
+                                        <a class="btn btn-primary btn-rounded waves-effect waves-light" data-toggle="tooltip"  data-placement="right" title="Aggiungi Utenti" href="{% url 'utenti_add' %}" > <i class="zmdi zmdi-account-add"></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="datatable-responsive_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                    <table id="datatable-responsive" class="table table-striped dt-responsive nowrap dataTable no-footer dtr-inline collapsed" cellspacing="0" width="100%" role="grid" aria-describedby="datatable-responsive_info" style="width: 100%;">
+                                                    <thead>
+                                                        <tr role="row">
+{#                                                            <th class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Nome: activate to sort column descending" style="width: 54px;">Pemessi</th>#}
+
+                                                            <th class="sorting_asc" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Nome: activate to sort column descending" style="width: 54px;">Nome</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Cognome: activate to sort column ascending" style="width: 51px;">Cognome</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="E-mail: activate to sort column ascending" style="width: 10px;">E-mail</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Azienda: activate to sort column ascending" style="width: 20px;">Azienda</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 20px;">Ruolo</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Gruppi: activate to sort column ascending" style="width: 25px;">Gruppi</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Stato: activate to sort column ascending" style="width: 35px;">Stato</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending" style="width: 30px; display: none;">Azioni</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        {% for user in object_list %}
+
+                                                            <tr role="row" class="odd">
+
+{#                                                            <td>{% for user_perm_name in user.get_all_permissions %} -- {{ user_perm_name|default_if_none:'Nothing'}}{% endfor %}</td>#}
+
+                                                            <td class="sorting_1" tabindex="0">{{ user.first_name|default_if_none:'Da Inserire'|title}}</td>
+                                                            <td>{{ user.last_name|default_if_none:'Da Inserire'|title}}</td>
+                                                            <td>{{ user.email|title }}</td>
+                                                            <td>{{ user.azienda|title }}</td>
+                                                            <td>{% if user.is_superuser %}<span class="label label-success">SuperUser</span>{% elif user.get_groups %}<span class="label label-purple">Administrator</span>{% else %}<span class="label label-danger"> Utente</span> {% endif %}</td>
+                                                            <td>{% for user_groups_name in user.groups.all %}{{ user_groups_name|default_if_none:'Nothing'}}{% endfor %}</td>
+                                                            <td>{% if user.is_active %} <span class="label label-success">Attivo</span> {% else %}<span class="label label-danger">Non Attivo</span>{% endif %}</td>
+                                                            <td class="actions">
+                                                                <a href="{% url 'utenti_edit' pk=user.id %}" data-toggle="tooltip"  data-placement="right" title="Modifica Utenti" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                                                <a href="{% url 'utenti_delete' pk=user.id %}" data-toggle="tooltip"  data-placement="right" title="Elimina Utenti" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                    </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

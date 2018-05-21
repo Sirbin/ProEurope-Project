@@ -1,0 +1,60 @@
+{% extends 'base/index.html' %}
+
+
+{% block title %}Elimina Utente {% endblock %}
+
+{% block content %}
+    {% include 'base/settingButton.html' %}
+    <form method="post" action=".">{% csrf_token %}
+        <p>vuoi Eliminare l'Utente <strong>{{ object.get_full_name }}</strong> ?</p>
+        <button class="btn btn-danger" id="confermDelete" type="button" name="{{ object.username }}" value="Elimina">Elimina</button>
+        <script type="application/javascript">
+                    document.getElementById('confermDelete').addEventListener('click', function () {
+                        swal({
+                                    title: "Sei sicuro di eliminare" ,
+                                    text: "Attenzione l'operazione è irreversibile ",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "Si , Elimina!",
+                                    closeOnConfirm: false,
+                                    html:true
+                                },
+                                function () {
+                                    $.ajax({
+
+                                        method:'GET',
+                                        url:'{% url 'user_del_ajax' %}',
+                                        data: {
+                                            userdelete: "{{ object.username }}",
+                                        },
+                                        Datatype:'json',
+                                        success:function(data) {
+
+                                            swal({
+                                                title:'Eliminato',
+                                                text:data['success'],
+                                                type:'success',
+                                                html: true
+                                            });
+                                            $('#confermDelete').attr('class','btn btn-danger disabled');
+                                            $('#confermDelete').prop('disabled',true);
+                                            setTimeout(function(){
+                                                console.log(window.location.href = "{% url 'utenti_lista'%}");
+                                            },5000);
+
+
+                                        },
+                                        error:function(xhr,errmsg,err){
+                                            alert(xhr.status+':'+xhr.responceText);
+                                        }
+
+                                    });
+
+                                });
+
+                    });
+                </script>
+    </form>
+
+{% endblock %}

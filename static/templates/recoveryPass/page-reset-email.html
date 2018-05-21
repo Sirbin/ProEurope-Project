@@ -1,0 +1,17 @@
+{% load i18n %}{% autoescape off %}
+
+ Gentile {{ user.username|capfirst }}
+
+    Invio dei dati di accesso per il suo account:
+
+    Username: {{ user.get_username }}
+
+
+    La seguente pagina per impostare una nuova password
+    {% block reset_link %}
+        {{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid  token=token %}
+    {% endblock %}
+
+
+ Servizio Administaor di ProEurope
+{% endautoescape %}

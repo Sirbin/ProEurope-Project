@@ -1,0 +1,61 @@
+{% extends 'login/page-login.html' %}
+
+
+
+{% block title %} Send Password {% endblock %}
+
+{% block error %}
+    <div class="row">
+                <div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4" style="margin-top: 15px;">
+                    {% if form.email.errors %}
+                    <div class="alert alert-danger">
+                        <p>{{ form.email.errors }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+        <div class="wrapper-page">
+        	<div class="m-t-30 card-box">
+                <div class="text-center">
+                    <h4 class="text-uppercase font-bold m-b-0 t-c-textEuro">Reset Password</h4>
+                    <p class="text-muted m-b-0 font-13 m-t-20">Per creare la nuova password del tuo account, inserisci il tuo indirizzo email:</p>
+
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal m-t-10" action="." method="post">
+                        {% csrf_token %}
+						<div class="form-group">
+                            <div class="col-xs-12">
+                                {{ form.email }}
+                            </div>
+                        </div>
+
+                        <div class="form-group text-center m-t-20 m-b-0">
+                            <div class="col-xs-12">
+                                <button class="btn btn-custom btn-bordred btn-block waves-effect waves-light text-uppercase" type="submit">Reset Password</button>
+                            </div>
+                        </div>
+
+					</form>
+
+                </div>
+            </div>
+            <!-- end card-box -->
+
+
+
+        </div>
+        <!-- end wrapper page -->
+        {% block reistrazione %}
+            <div class="row">
+				<div class="col-sm-12 text-center">
+					<p class="text-muted">Sei Nuovo?<a href="{% url 'registrazione' %}" class="text-primary m-l-5"><b>Registrati</b></a></p>
+				</div>
+			</div>
+
+        {% endblock %}
+
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends 'login/page-login.html' %}
+    {% block error %}
+{#        <div class="row">#}
+{#                <div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4" style="margin-top: 15px;">#}
+{#                    {% if form.errors %}#}
+{#                    <div class="alert alert-danger">#}
+{#                        {{ form.errors }}#}
+{#                    </div>#}
+{#                    {% endif %}#}
+{#                </div>#}
+{#        </div>#}
+        {% endblock %}
+    {% block content %}
+
+
+        <div class="wrapper-page">
+        	<div class="m-t-30 card-box">
+                <div class="text-center">
+                    <h4 class="text-uppercase font-bold m-b-0 t-c-textEuro">Registrazione Utenti</h4>
+                </div>
+                <div class="panel-body">
+
+                    <form  class="form-horizontal" action="." method="post">{% csrf_token %}
+
+
+
+						<div class="form-group ">
+							<div class="col-xs-12">
+                                <b>{{ form.username.label }}</b>
+                                {{ form.username }}
+                                <div id="error-log"><strong>{{ form.username.errors }}</strong></div>
+							</div>
+
+						</div>
+
+						<div class="form-group ">
+							<div class="col-xs-12">
+                               <b>{{ form.email.label }}</b>
+								{{ form.email }}
+                                <div id="error-log"><strong>{{ form.email.errors }}</strong></div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-xs-12">
+                                <b>{{ form.password.label }}</b>
+                                {{ form.password }}
+                                <div id="error-log"><strong>{{ form.password.errors }}</strong></div>
+							</div>
+						</div>
+
+                        <div class="form-group">
+							<div class="col-xs-12">
+                                <b>{{ form.first_name.label }}</b>
+                                {{ form.first_name }}
+                                <div id="error-log"><strong>{{ form.first_name.errors }}</strong></div>
+							</div>
+						</div>
+
+                        <div class="form-group">
+							<div class="col-xs-12">
+                                <b>{{ form.last_name.label }}</b>
+                                {{ form.last_name }}
+                                <div id="error-log"><strong>{{ form.last_name.errors }}</strong></div>
+							</div>
+						</div>
+
+                        <div class="form-group">
+							<div class="col-xs-12">
+								<div class="checkbox checkbox-custom">
+									<input id="checkbox-signup" type="checkbox" checked="checked">
+									<label for="checkbox-signup">Io accetto <a href="#">Termini e Condizioni</a></label>
+								</div>
+
+							</div>
+						</div>
+
+						<div class="form-group text-center m-t-30">
+							<div class="col-xs-12">
+								<button class="btn btn-custom btn-bordred btn-block waves-effect waves-light text-uppercase" type="submit">
+									Registrazione
+								</button>
+							</div>
+
+						</div>
+					</form>
+                </div>
+            </div>
+            <!-- end card-box -->
+        </div>
+        <!-- end wrapper page -->
+
+
+    {% endblock %}
+

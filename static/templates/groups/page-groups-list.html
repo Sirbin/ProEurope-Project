@@ -1,0 +1,84 @@
+{% extends 'base/index.html' %}
+
+
+{% block content %}
+
+    {% include 'base/settingButton.html' %}
+ {% if messages %}
+        {% for message in messages  %}
+            <div class="row">
+                {% if forloop.first %}
+                <div {% if message.tags %}class="alert alert-{{ message.tags }} alert-dismissable"{% endif %} id="close">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <strong>{{ message }}</strong>
+                </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+
+ <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-color panel-default-site">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h3 class="panel-title">Tabella Gruppi</h3>
+                            </div>
+                            <div class="col-xs-6">
+                                <h3 class="panel-title pull-right">Gestione Gruppi</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                    <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card-box table-responsive">
+                                    <div class="col-sm-12">
+                                      <div class="m-b-30">
+                                        <a class="btn btn-primary btn-rounded waves-effect waves-light" data-toggle="tooltip"  data-placement="right" title="Aggiungi Gruppi" href="{% url 'gruppi_add' %}"> <i class="zmdi zmdi-accounts-add"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                        <div class="row">
+                                            <div class="col-sm-8">
+                                                <table id="datatable-responsive" class="table table-bordered m-0">
+
+                                                    <thead>
+                                                    <tr>
+                                                        <th style="width: 10px;">Gruppi</th>
+                                                        <th style="width: 100px;">Descrizione</th>
+                                                        <th>Permessi</th>
+                                                        <th>Azioni</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for groups in object_list %}
+                                                    <tr>
+
+                                                            <td>{{ groups.name }}</td>
+                                                            <td>{{ groups.description }}</td>
+                                                            <td>{% for gr_perm in groups.permissions.all %} , {{ gr_perm }}{% endfor %}</td>
+                                                            <td class="actions">
+                                                                <a href="{% url 'gruppi_edit' pk=groups.id %}" data-toggle="tooltip"  data-placement="right" title="Modifica Gruppi" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                                                <a href="{% url 'gruppi_delete' pk=groups.id %}" data-toggle="tooltip"  data-placement="right" title="Elimina Gruppi" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                                                            </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+ </div>
+{% endblock %}

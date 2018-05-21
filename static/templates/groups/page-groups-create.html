@@ -1,0 +1,64 @@
+{% extends 'base/index.html' %}
+
+
+{% block content %}
+    {% include 'base/settingButton.html' %}
+
+
+
+        <form method='post' action=".">{% csrf_token %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="panel panel-color panel-default-site">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Crea Gruppo E Permessi</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <p class="-align-left">I campi contrassegnati da * sono obbligatori</p>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <b>{{ form.name.label }}</b>
+                                            {{ form.name }}
+                                            <p style="color: red">{{ form.name.errors }}</p>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <b>{{ form.description.label }}</b>
+                                            {{ form.description }}
+                                            <p style="color: red">{{ form.description.errors }}</p>
+                                        </div>
+                                    </div>
+                                    </br>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <b>{{ form.permissions.label }}</b>
+                                            {{ form.permissions }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <button type="submit" class="btn btn-custom btn-rounded waves-effect waves-success">
+                                    Salva Gruppo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+    </form>
+
+
+
+
+{% endblock %}

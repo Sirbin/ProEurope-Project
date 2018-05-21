@@ -1,0 +1,83 @@
+<div class="left side-menu">
+                <div class="sidebar-inner slimscrollleft">
+                    <!--- Divider -->
+                    <div id="sidebar-menu">
+                        <ul>
+
+                        	<li class="text-muted menu-title">Menu</li>
+                            <li class="has_sub active">
+                                {% url 'base' as base %}
+                                <a{% if request.path == base  %}  class="waves-effect active " {% endif %} href="{{ base }}"><i class="zmdi zmdi-view-dashboard"></i> <span> Dashboard </span> </a>
+
+                            </li>
+
+
+                            <li class="has_sub active">
+                                {% url 'azienda_list' as azi %}
+                                <a {% if request.path == azi %} class="waves-effect active" {% endif %} href="{{ azi }}"><i class="zmdi zmdi-city"></i> <span> Azienda </span> </a>
+                            </li>
+
+                            <li class="has_sub active">
+                                <!-- da inserire-->
+                                {% url 'clienti_lista' as cli %}
+                                <a {% if request.path == cli %}class="waves-effect active" {% endif %} href="{{ cli }}"><i class="zmdi zmdi-accounts-list"></i> <span>Pratiche Clienti </span> </a>
+                            </li>
+
+                            <li class="text-muted menu-title">Gestione Utenti e Gruppi</li>
+
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-accounts"></i><span> Gestione Utenti </span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="{% url 'utenti_lista' %}">Collaboratori</a></li>
+                                    <li><a href="{% url 'gruppi_lista' %}">Collaboratori e Gruppi</a></li>
+
+
+                                </ul>
+                            </li>
+
+{#                            <li class="has_sub">#}
+{#                                <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-map"></i><span> Maps </span></a>#}
+{#                                <ul class="list-unstyled">#}
+{#                                    <li><a href="map-google.html">Google Maps</a></li>#}
+{#                                    <li><a href="map-vector.html">Vector Maps</a></li>#}
+{#                                </ul>#}
+{#                            </li>#}
+
+{#                            <li class="text-muted menu-title">More</li>#}
+{##}
+{#                            <li class="has_sub">#}
+{#                                <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-collection-item"></i><span class="label label-default pull-right">7</span><span> Pages </span></a>#}
+{#                                <ul class="list-unstyled">#}
+{#                                	<li><a href="page-starter.html">Starter Page</a></li>#}
+{#                                    <li><a href="page-userManagement.html">Login</a></li>#}
+{#                                    <li><a href="page-register.html">Register</a></li>#}
+{#                                    <li><a href="page-recoverpw.html">Recover Password</a></li>#}
+{#                                    <li><a href="page-lock-screen.html">Lock Screen</a></li>#}
+{#                                    <li><a href="page-confirm-mail.html">Confirm Mail</a></li>#}
+{#                                    <li><a href="page-404.html">Error 404</a></li>#}
+{#                                </ul>#}
+{#                            </li>#}
+{##}
+{#                            <li class="has_sub">#}
+{#                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-share"></i><span>Multi Level </span></a>#}
+{#                                <ul>#}
+{#                                    <li class="has_sub">#}
+{#                                        <a href="javascript:void(0);" class="waves-effect"><span>Menu Level 1.1</span> </a>#}
+{#                                        <ul style="">#}
+{#                                            <li><a href="javascript:void(0);"><span>Menu Level 2.1</span></a></li>#}
+{#                                            <li><a href="javascript:void(0);"><span>Menu Level 2.2</span></a></li>#}
+{#                                            <li><a href="javascript:void(0);"><span>Menu Level 2.3</span></a></li>#}
+{#                                        </ul>#}
+{#                                    </li>#}
+{#                                    <li>#}
+{#                                        <a href="javascript:void(0);"><span>Menu Level 1.2</span></a>#}
+{#                                    </li>#}
+{#                                </ul>#}
+{#                            </li>#}
+
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>

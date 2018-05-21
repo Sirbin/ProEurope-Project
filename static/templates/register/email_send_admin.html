@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <p>Registrato Utente {{ username }}</p>
+
+    {% block reset_link %}
+    Per completare la registrazione clicca sul seguente  link  <a href="http://{{ domain }}{% url 'utenti_edit' pk=username_id %}">Link</a>
+    </br>
+    Indirizzo di Posta Elettronica per Inviare E-mail di conferma Registrazione <a href="mailto:{{ username.email}}">Posta Utente</a>
+    {% endblock %}
+</body>
+</html>

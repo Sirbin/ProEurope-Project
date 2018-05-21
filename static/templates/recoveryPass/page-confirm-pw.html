@@ -1,0 +1,52 @@
+{% extends 'login/page-login.html' %}
+
+{% block title %} Nuova Password {% endblock %}
+
+    {% block error %}
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4" style="margin-top: 15px;">
+                    {% if form.new_password2.errors %}
+                    <div class="alert alert-danger">
+                        <p>{{ form.new_password2.errors }}</p>
+                    </div>
+                    {% endif %}
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block content %}
+
+        <div class="wrapper-page">
+
+        	<div class="m-t-30 card-box">
+                <div class="text-center">
+                    <h4 class="text-uppercase font-bold m-b-0">Inserisci Nuova Password</h4>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal m-t-10" action="." method="post">
+                        {% csrf_token %}
+						<div class="form-group">
+							<div class="col-xs-12">
+			                    {{ form.new_password1 }}
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-xs-12">
+								{{ form.new_password2 }}
+							</div>
+						</div>
+						<div class="form-group text-center m-t-30">
+							<div class="col-xs-12">
+								<button class="btn btn-custom btn-bordred btn-block waves-effect waves-light text-uppercase" type="submit">
+									Conferma Password
+								</button>
+							</div>
+						</div>
+					</form>
+                </div>
+            </div>
+
+            <!-- end card-box -->
+        </div>
+        <!-- end wrapper page -->
+    {% endblock %}

@@ -1,0 +1,134 @@
+{% extends 'base/index.html' %}
+
+{% block title %} Crea Azienda {% endblock %}
+
+{% block content%}
+
+    {% include 'base/settingButton.html' %}
+
+    <form method='post' action=".">{% csrf_token %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="panel panel-color panel-default-site">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Crea Azienda</h3>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <p class="-align-left">I campi contrassegnati da * sono obbligatori</p>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <b>{{ form.denominazione.label}}</b>
+                                            {{ form.denominazione }}
+                                            <div id="error-log"><strong>{{ form.denominazione.errors }}</strong></div>
+                                        </div>
+                                    </div>
+                                    </br>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <b>{{ form.indirizzo.label }}</b>
+                                            {{ form.indirizzo }}
+                                            <div id="error-log"><strong>{{ form.indirizzo.errors }}</strong></div>
+                                        </div>
+                                       <div class="col-xs-6">
+                                            <b>{{ form.citta.label }}</b>
+                                            {{ form.citta|capfirst }}
+                                            <div id="error-log"><strong>{{ form.citta.errors }}</strong></div>
+                                        </div>
+                                    </div>
+                                    </br>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <b>{{ form.comune.label }}</b>
+                                            {{ form.comune }}
+                                            <div id="error-log"><strong>{{ form.comune.errors }}</strong></div>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <b>{{ form.cap.label }}</b>
+                                            {{ form.cap }}
+                                            <div id="error-log"><strong>{{ form.cap.errors }}</strong></div>
+                                        </div>
+                                    </div>
+                                    </br>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <b>{{ form.piva.label }}</b>
+                                            {{ form.piva }}
+                                            <div id="error-log"><strong>{{ form.piva.errors }}</strong></div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <b>{{ form.cf.label }}</b>
+                                            {{ form.cf }}
+                                            <div id="error-log"><strong>{{ form.cf.errors }}</strong></div>
+                                        </div>
+                                    </div>
+                                    </br>
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <b>{{ form.telefonoFisso1.label }}</b>
+                                            {{ form.telefonoFisso1 }}
+                                            {{ form.telefonoFisso1.help_text }}
+                                            <div id="error-log"><strong>{{ form.telefonoFisso1.errors }}</strong></div>
+                                        </div>
+{#                                        <div class="col-xs-4">#}
+{#                                            <b>{{ form.telefonoFisso2.label }}</b>#}
+{#                                            {{ form.telefonoFisso2 }}#}
+{#                                            {{ form.telefonoFisso2.help_text }}#}
+{#                                            <p style="color: red">{{ form.telefonoFisso2.errors }}</p>#}
+{#                                        </div>#}
+                                        <div class="col-xs-4">
+                                            <b>{{ form.cellulare1.label }}</b>
+                                            {{ form.cellulare1 }}
+                                            {{ form.cellulare1.help_text }}
+                                            <div id="error-log"><strong>{{ form.cellulare1.errors }}</strong></div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <b>{{ form.fax.label }}</b>
+                                            {{ form.fax }}
+                                            {{ form.fax.help_text }}
+                                            <div id="error-log"><strong>{{ form.fax.errors }}</strong></div>
+                                        </div>
+                                    </div>
+                                    <script type="application/javascript">
+                                        $(document).ready(
+                                                $('#datepicker').datepicker()
+                                        )
+                                    </script>
+                                    </br>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <b>{{ form.email.label }}</b>
+                                            {{ form.email }}
+                                            <div id="error-log"><strong>{{ form.email.errors }}</strong></div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <b>{{ form.url_sito.label }}</b>
+                                            {{ form.url_sito }}
+                                            <div id="error-log"><strong>{{ form.url_sito.errors }}</strong></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <button type="submit" class="btn btn-custom btn-rounded waves-effect waves-success">
+                                    Salva Azienda
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+    </form>
+    {% endblock %}

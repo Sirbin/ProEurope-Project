@@ -1,0 +1,111 @@
+ <table class="table m-0" id="data">
+                            <thead>
+                            <tr>
+                                <th>Pratiche Clienti</th>
+                                <th>Azienda</th>
+                                <th>Collaboratore</th>
+                                <th>Numero Rea</th>
+                                <th>Numero Allegati <span class="badge badge-success">{{ totali }}</span></th>
+                                <th>Stato</th>
+                                <th>Completato</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                                {% for client in object_list %}
+
+                                    <tr>
+                                        <th data-toggle="tooltip" data-placement="right" title="Documento Riconoscimento">{{ client.denominazione|capfirst|default:'Da inserire'|title }}</th>
+                                        <td>{{ client.user.azienda|title }}</td>
+                                        <td>{{ client.user }}</td>
+                                        <td>{{ client.numero_rea }}</td>
+                                        <td class="totali">{% for key,value in numero_allegati.items  %}{% if key == client.denominazione %}Totali Inseriti <span id="totali{{ client.pk }}" value="{{ value }}" class="badge badge-danger">{{ value }}</span>{% endif %}{% endfor %}</td>
+                                        <td class='stato' name="stato{{ client.pk }}" id="stato{{ client.pk }}">{% for key,value in numero_allegati.items  %}{% if key == client.denominazione %}{% if value == 0 %}<span class="label label-danger">In Attesa</span>{% endif %} {% if value >= 1 %}<span class="label label-warning">In Progresso</span>{% endif %}{% if value == total %}<span class="label label-success">Terminato</span>{% endif %}{% endif %}{% endfor %}</td>
+                                        {% if client.is_completated %}
+                                                <td><div class="checkbox checkbox-primary checkbox-single"><input {% if not request.user.is_superuser %} disabled=disabled {% endif %} class="check_complete" id_name='{{ client.id }}'  name="check_{{ client.id }}" value="{{ client.is_complete }}" checked="checked" id="singleCheckbox2_{{ client.id }}" type="checkbox"/><label></label></div></td>
+                                        {% else %}
+                                                <td><div class="checkbox checkbox-primary checkbox-single"><input {% if not request.user.is_superuser %} disabled=disabled {% endif %} class="check_complete" id_name='{{ client.id }}' name="check_{{ client.id }}" id="singleCheckbox2_{{ client.id }}" type="checkbox"/><label></label></div></td>
+                                        {% endif %}
+
+                                        <!--<td>{% for key,value in numero_allegati.items  %}{% if key == client.denominazione %}Totali Inseriti <span class="badge badge-danger">{{ value }}</span>{% endif %}{% endfor %}</td>
+                                        <td>{% for key,value in numero_allegati.items  %}{% if key == client.denominazione %}{% if value == 0 %}<span class="label label-danger">In Attesa</span>{% endif %} {% if value >= 1 %}<span class="label label-warning">In Progresso</span>{% endif %}{% if value == totali %}<span class="label label-success">Terminato</span>{% endif %}{% endif %}{% endfor %}</td>-->
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                             <script type="application/javascript">
+
+                                $(document).ready(function() {
+                                    var checkbox_ = $('.check_complete')
+                                    checkbox_.each(function(){
+                                        var id_value = $(this).attr('id');
+                                        var id_split = id_value.split('_')[1];
+                                        var id_value_2 = $('#'+id_value).val();
+                                        var total_for_id = ($('#totali'+id_split).attr('value'));
+
+                                        //console.log(id_value_2)
+                                        if($('#'+id_value).is(':checked')){
+                                            $('#stato'+id_split).html("<span class='label label-success'>Terminato</span>");
+                                        }else {
+
+                                        }
+
+                                    });
+
+
+                                    checkbox_.each(function(){
+                                        var id_ = $(this).attr('id');
+                                        var id_split = id_.split('_')[1];
+                                        $(('#'+id_)).click(function(){
+                                           if($('#'+id_).is(':checked')){
+                                               $('#stato'+id_split).html("<span class='label label-success'>Terminato</span>");
+                                               console.log($('#'+id_).val());
+                                               $.ajax({
+                                                    url: '{% url 'check_complete' %}',
+                                                    dataType: 'json',
+                                                    method:'GET',
+                                                    data:{
+                                                    'cli_id':id_split,
+                                                    },
+                                                    success:function(data) {
+                                                        console.log('True');
+                                                    },
+                                                    error:function(xhr,errmsg,err){
+                                                        alert(xhr.status+':'+xhr.responceText);
+                                                    }
+                                               });
+
+                                           }else{
+                                               var total_for_id = ($('#totali'+id_split).attr('value'));
+                                               $('#'+id_).prop('checked',false);
+                                               check(total_for_id)
+                                               $.ajax({
+                                                    url: '{% url 'uncheck_complete' %}',
+                                                    dataType: 'json',
+                                                    method:'GET',
+                                                    data:{
+                                                    'cli_id':id_split,
+                                                    },
+                                                    success:function(data) {
+                                                        console.log('Ok cambiato')
+                                                    },
+                                                    error:function(xhr,errmsg,err){
+                                                        alert(xhr.status+':'+xhr.responceText);
+                                                    }
+                                               });
+                                           }
+
+                                        });
+
+                                    function check(value){
+                                            if(value == 0){
+                                                return $('#stato'+id_split).html("<span class='label label-danger'>In Attese</span>")
+                                           }else if (value>= 1){
+                                                return $('#stato'+id_split).html("<span class='label label-warning'>In Progresso</span>")
+                                           }
+                                    }
+                                });
+
+
+                                });
+                            </script>
+</table>

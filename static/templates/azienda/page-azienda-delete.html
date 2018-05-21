@@ -1,0 +1,94 @@
+{% extends 'base/index.html' %}
+
+{% block title %} Elimina Azienda {% endblock %}
+
+
+{% block content %}
+
+    {% include 'base/settingButton.html' %}
+    <div class="row">
+        <div class="col-xs-12">
+            <form method="post" action=".">{% csrf_token %}
+                <p>Vuoi eliminare l'Aziendanda <strong>{{ object.denominazione }} ?</strong></p>
+                {% if user_azienda %}
+                    <p><strong>Attenzione!! L'Azienda ha i seguenti utenti e clienti. </strong><p>
+                    <p><strong>Se si desidera eliminare l'azienda verrano eliminati gli utenti e clienti associati ad
+                        essa</strong></p>
+
+                    {% for user_groupss in user_azienda %}
+
+                        <ul class="list-group">
+                            <li class="list-group-item"><a data-toggle="tooltip" data-placement="right"
+                                                           title="Clicca per modificare il clienti"
+                                                           class="user-list-item"
+                                                           href="{% url 'utenti_edit' pk=user_groupss.pk %}"><span
+                                    class="name">{{ user_groupss|capfirst }}</span></a></li>
+                        </ul>
+
+                    {% endfor %}
+                {% endif %}
+                {% if client_azienda %}
+                    {% for user_client in client_azienda %}
+
+                        <ul class="list-group">
+                            <li class="list-group-item"><a data-toggle="tooltip" data-placement="right"
+                                                           title="Clicca per modificare l'utente" class="user-list-item"
+                                                           href="{% url 'clienti_edit' pk=user_client.pk %}"><span
+                                    class="name">{{ user_client|capfirst }}</span></a></li>
+                        </ul>
+                    {% endfor %}
+                {% endif %}
+                <button class="btn btn-danger" id='confermDelete' type="button" value="Elimina">Elimina
+                </button>
+                <script type="application/javascript">
+                    document.getElementById('confermDelete').addEventListener('click', function () {
+                        swal({
+                                    title: "Sei sicuro di eliminare" ,
+                                    text: "Attenzione l'operazione è irreversibile ",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "Si , Elimina!",
+                                    closeOnConfirm: false,
+                                    html:true
+                                },
+                                function () {
+                                    $.ajax({
+
+                                        method:'GET',
+                                        url:'/azienda/user/delete/',
+                                        data: {
+                                            userdelete: "{{ object.denominazione }}",
+                                        },
+                                        Datatype:'json',
+                                        success:function(data) {
+
+                                            swal({
+                                                title:'Eliminato',
+                                                text:data['success'],
+                                                type:'success',
+                                                html: true
+                                            });
+                                            $('#confermDelete').attr('class','btn btn-danger disabled');
+                                            $('#confermDelete').prop('disabled',true);
+                                            setTimeout(function(){
+                                                console.log(window.location.href = "{% url 'azienda_list'%}");
+                                            },3000);
+
+                                        },
+                                        error:function(xhr,errmsg,err){
+                                            alert(xhr.status+':'+xhr.responceText);
+                                        }
+
+                                    });
+
+                                });
+
+                    });
+                </script>
+
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

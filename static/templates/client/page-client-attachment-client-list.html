@@ -1,0 +1,215 @@
+{% extends 'base/index.html' %}
+
+{% block title%} Visualizza Allegati Per Cliente {% endblock %}
+
+{% block content%}
+    {% include 'base/settingButton.html' %}
+
+    {% include 'client/page-client-attachments-button.html' %}
+
+    <table class="table m-0" id="data">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Allegato</th>
+            <th>Grandezza Allegato</th>
+            <th>Ultima Modifica</th>
+            <th>Azioni</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for attch in object_list %}
+
+        <tr>
+            <th data-toggle="tooltip"  data-placement="right" title="Documento Riconoscimento">Documento: </th>
+            <th>{{ attch.doc.name|default:'--' }}</th>
+            <td>{% if attch.doc %}{{ attch.doc.size|filesizeformat }}{% else %}--{% endif %}</td>
+            <td>{% for k,v in time.items %}{% if k == attch.doc.name %}{{ v }}{% endif %}{% endfor %}</td>
+            <td class="actions">
+                <a {% if attch.doc %} href="{{ attch.doc.url }}" {% else %} -- {% endif %} data-toggle="tooltip"  data-placement="right" title="Scarica Allegato" class="on-default edit-row"><i class="zmdi zmdi-download"></i></a>
+                {% comment %}<a  id="prova" forse="{{ attch.doc.url }}" data-toggle="modal" data-target="#myModal" data-placement="right" title="Visualizza Allegato" class="screenshot" rel="alternate"><i class="fa fa-eye"></i></a>#}
+        {% endcomment %}    </td>
+        </tr>
+        <tr>
+            <th data-toggle="tooltip"  data-placement="right" title="Codice Fiscale">Cod.Fiscale: </th>
+            <th>{{ attch.cf_doc.name|default:'--' }}</th>
+            <td>{% if attch.cf_doc %}{{ attch.cf_doc.size|filesizeformat }}{% else %}--{% endif %}</td>
+            <td>{% for k,v in time.items %}{% if k == attch.cf_doc.name %}{{ v }}{% endif %}{% endfor %}</td>
+            <td class="actions">
+                <a {% if attch.cf_doc %} href=" {{ attch.cf_doc.url }}" {% else %} -- {% endif %}data-toggle="tooltip"  data-placement="right" title="Scarica Allegato" class="on-default edit-row"><i class="zmdi zmdi-download"></i></a>
+{#                <a href="{% url 'clienti_attach_delete' pk=attch.id nome=attch.cf_doc.name %}" data-toggle="tooltip"  data-placement="right" title="Elimina Allegato" class="user-list-item" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>#}
+            </td>
+        </tr>
+        <tr>
+            <th data-toggle="tooltip"  data-placement="right" title="Attribuzione Partita Iva">P.Iva: </th>
+
+            <th>{% if attch.attrribuzione_pi %}{{ attch.attrribuzione_pi.name|default:'--' }}{% else %}--{% endif %}</th>
+            <td>{% if attch.attrribuzione_pi %}{{ attch.attrribuzione_pi.size|default_if_none:'--'|filesizeformat }}{% else %}--{% endif %}</td>
+            <td>{% for k,v in time.items %}{% if k == attch.attrribuzione_pi.name %}{{ v }}{% endif %}{% endfor %}</td>
+            <td class="actions">
+                <a {% if attch.attrribuzione_pi%} href="{{ attch.attrribuzione_pi.url }}"{% else %}--{% endif  %} data-toggle="tooltip"  data-placement="right" title="Scarica Allegato" class="on-default edit-row"><i class="zmdi zmdi-download"></i></a>
+{#                <a href="{% url 'clienti_attach_delete' pk=attch.id nome=attch.attrribuzione_pi.name %}" data-toggle="tooltip"  data-placement="right" title="Elimina Allegato" class="user-list-item" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>#}
+
+            </td>
+        </tr>
+        <tr>
+            <th data-toggle="tooltip"  data-placement="right" title="Certificato Camerare" >C.Camerale: </th>
+
+            <th>{{ attch.certificato_camerale.name|default:'--' }}</th>
+            <td>{% if attch.certificato_camerale %}{{ attch.certificato_camerale.size|filesizeformat}}{% else %}--{% endif %}</td>
+            <td>{% for k,v in time.items %}{% if k == attch.certificato_camerale.name %}{{ v }}{% endif %}{% endfor %}</td>
+            <td class="actions">
+
+                <a {% if attch.certificato_camerale %} href="{{ attch.certificato_camerale.url }}"{% else %}--{% endif %} data-toggle="tooltip"  data-placement="right" title="Scarica Allegato" class="on-default edit-row"><i class="zmdi zmdi-download"></i></a>
+{#                <a href="" data-toggle="tooltip"  data-placement="right" title="Elimina Allegato" class="user-list-item" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>#}
+
+            </td>
+        </tr>
+        <tr>
+            <th data-toggle="tooltip"  data-placement="right" title="Visura Camerare" >V.Camerale: </th>
+
+            <th>{{ attch.visura_camerale.name|default:'--' }}</th>
+            <td>{% if attch.visura_camerale %}{{ attch.visura_camerale.size|filesizeformat}}{% else %}--{% endif %}</td>
+            <td>{% for k,v in time.items %}{% if k == attch.visura_camerale.name %}{{ v }}{% endif %}{% endfor %}</td>
+            <td class="actions">
+
+                <a {% if attch.visura_camerale %} href="{{ attch.visura_camerale.url }}"{% else %}--{% endif %} data-toggle="tooltip"  data-placement="right" title="Scarica Allegato" class="on-default edit-row"><i class="zmdi zmdi-download"></i></a>
+{#                <a href="" data-toggle="tooltip"  data-placement="right" title="Elimina Allegato" class="user-list-item" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>#}
+
+            </td>
+        </tr>
+        <tr>
+            <th data-toggle="tooltip"  data-placement="right" title="Contratto Propietà">Contratto Pro: </th>
+            <th>{{ attch.contratto.name|default:'--' }}</th>
+            <td>{% if attch.contratto %}{{ attch.contratto.size|default_if_none:'--'|filesizeformat }}{% else %}--{% endif %}</td>
+            <td>{% for k,v in time.items %}{% if k == attch.contratto.name %}{{ v }}{% endif %}{% endfor %}</td>
+            <td class="actions">
+                <a {% if attch.contratto %}href="{{ attch.contratto.url }}" {% else %}-- {% endif %}data-toggle="tooltip"  data-placement="right" title="Scarica Allegato" class="on-default edit-row"><i class="zmdi zmdi-download"></i></a>
+{#                <a href="" data-toggle="tooltip"  data-placement="right" title="Elimina Allegato" class="user-list-item" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>#}
+
+            </td>
+        </tr>
+        <tr>
+            <th data-toggle="tooltip"  data-placement="right" title="Preventivi">Preventivi: </th>
+            <th>{{ attch.preventivi.name|default:'--' }}</th>
+            <td>{% if attch.preventivi %}{{ attch.preventivi.size|default_if_none:'--'|filesizeformat }}{% else %}--{% endif %}</td>
+            <td>{% for k,v in time.items %}{% if k == attch.preventivi.name %}{{ v }}{% endif %}{% endfor %}</td>
+            <td class="actions">
+                <a {% if attch.preventivi %} href="{{ attch.preventivi.url }}" {% else %}--{% endif %} data-toggle="tooltip"  data-placement="right" title="Scarica Allegato" class="on-default edit-row"><i class="zmdi zmdi-download"></i></a>
+{#                <a href="" data-toggle="tooltip"  data-placement="right" title="Elimina Allegato" class="user-list-item" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>#}
+            </td>
+        </tr>
+        <tr>
+            <th data-toggle="tooltip"  data-placement="right" title="Modello Unico Ricevuta Anno Precedente">Mod.Unico Anno Prec: </th>
+            <th>{{ attch.mod_unico_anno_prec.name|default:'--' }}</th>
+            <td>{% if attch.mod_unico_anno_prec %}{{ attch.mod_unico_anno_prec.size|filesizeformat }}{% else %}--{% endif %}</td>
+            <td>{% for k,v in time.items %}{% if k == attch.mod_unico_anno_prec.name %}{{ v }}{% endif %}{% endfor %}</td>
+            <td class="actions">
+                <a {% if attch.mod_unico_anno_prec %}href="{{ attch.mod_unico_anno_prec.url }}"{% else %}--{% endif %} data-toggle="tooltip"  data-placement="right" title="Scarica Allegato" class="on-default edit-row"><i class="zmdi zmdi-download"></i></a>
+{#                <a href="" data-toggle="tooltip"  data-placement="right" title="Elimina Allegato" class="user-list-item" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>#}
+
+            </td>
+        </tr>
+        <tr>
+            <th data-toggle="tooltip"  data-placement="right" title="Modello Unico Anno Secondo Anno Precedente">Mod.Unico Sec.Anno Prec: </th>
+            <th>{{ attch.mod_unico_anno_prec_2.name|default:'--' }}</th>
+            <td>{% if attch.mod_unico_anno_prec_2 %}{{ attch.mod_unico_anno_prec_2.size|default_if_none:'--'|filesizeformat }}{% else %}--{% endif %}</td>
+            <td>{% for k,v in time.items %}{% if k == attch.mod_unico_anno_prec_2.name %}{{ v }}{% endif %}{% endfor %}</td>
+            <td class="actions">
+                <a {% if attch.mod_unico_anno_prec_2 %} href="{{ attch.mod_unico_anno_prec_2.url }}"{% else %}--{% endif %} data-toggle="tooltip"  data-placement="right" title="Scarica Allegato" class="on-default edit-row"><i class="zmdi zmdi-download"></i></a>
+{#                <a href="" data-toggle="tooltip"  data-placement="right" title="Elimina Allegato" class="user-list-item" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>#}
+{#               </td>#}
+        </tr>
+        <tr>
+            <th data-toggle="tooltip"  data-placement="right" title="Bilancio Ultimi 2 Anni">Bilancio Ult.2 Anni: </th>
+            <th>{{ attch.bilancio_ultimi_2.name|default:'--' }}</th>
+            <td>{% if attch.bilancio_ultimi_2 %}{{ attch.bilancio_ultimi_2.size|default_if_none:'--'|filesizeformat }}{% else %}--{% endif %}</td>
+            <td>{% for k,v in time.items %}{% if k == attch.bilancio_ultimi_2.name %}{{ v }}{% endif %}{% endfor %}</td>
+            <td class="actions">
+                <a {% if attch.bilancio_ultimi_2 %}href="{{ attch.bilancio_ultimi_2.url }}"{% else %}--{% endif %} data-toggle="tooltip"  data-placement="right" title="Scarica Allegato" class="on-default edit-row"><i class="zmdi zmdi-download"></i></a>
+{#                <a href="" data-toggle="tooltip"  data-placement="right" title="Elimina Allegato" class="user-list-item" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>#}
+{#            </td>#}
+        </tr>
+        <tr>
+            <th data-toggle="tooltip"  data-placement="right" title="Bilancio Anno in Corso">Bilancio Anno in Corso: </th>
+            <th>{{ attch.bilancio_anno_corso|default:'--' }}</th>
+            <td>{% if attch.bilancio_anno_corso %}{{ attch.bilancio_anno_corso.size|default_if_none:'--'|filesizeformat }}{% else %}--{% endif %}</td>
+            <td>{% for k,v in time.items %}{% if k == attch.bilancio_anno_corso.name %}{{ v }}{% endif %}{% endfor %}</td>
+            <td class="actions">
+                <a {% if attch.bilancio_anno_corso %} href="{{ attch.bilancio_anno_corso.url }}"{% else %}--{% endif %} data-toggle="tooltip"  data-placement="right" title="Scarica Allegato" class="on-default edit-row"><i class="zmdi zmdi-download"></i></a>
+{#                <a href="" data-toggle="tooltip"  data-placement="right" title="Elimina Allegato" class="user-list-item" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>#}
+{#       </td>#}
+        </tr>
+        <tr>
+            <th data-toggle="tooltip"  data-placement="right" title="Attestati">Attestati: </th>
+            <th>{{ attch.attestati.name|default:'--' }}</th>
+            <td>{% if attch.attestati %}{{ attch.attestati.size|default_if_none:'--'|filesizeformat }}{% else %}--{% endif %}</td>
+            <td>{% for k,v in time.items %}{% if k == attch.attestati.name %}{{ v }}{% endif %}{% endfor %}</td>
+            <td class="actions">
+                <a {% if attch.attestati %}href="{{ attch.attestati.url }}"{% else %}--{% endif %} data-toggle="tooltip"  data-placement="right" title="Scarica Allegato" class="on-default edit-row"><i class="zmdi zmdi-download"></i></a>
+{#                <a href="" data-toggle="tooltip"  data-placement="right" title="Elimina Allegato" class="user-list-item" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>#}
+       </td>
+        </tr>
+        <tr>
+            <th data-toggle="tooltip"  data-placement="right" title="Allegati Autocertificazione">Allegati AutoCer: </th>
+            <th>{{ attch.allegati_autocertificazione.name|default:'--' }}</th>
+            <td>{% if attch.allegati_autocertificazione %}{{ attch.allegati_autocertificazione.size|default_if_none:'--'|filesizeformat }}{% else %}{% endif %}</td>
+            <td>{% for k,v in time.items %}{% if k == attch.allegati_autocertificazione.name %}{{ v }}{% endif %}{% endfor %}</td>
+            <td class="actions">
+                <a {% if attch.allegati_autocertificazione %}href="{{ attch.allegati_autocertificazione.url }}"{% else %}--{% endif %} data-toggle="tooltip"  data-placement="right" title="Scarica Allegato" class="on-default edit-row"><i class="zmdi zmdi-download"></i></a>
+{#                <a href="" data-toggle="tooltip"  data-placement="right" title="Elimina Allegato" class="user-list-item" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>#}
+       </td>
+        </tr>
+        <tr>
+            <th data-toggle="tooltip"  data-placement="right" title="Altri Allegati">Altri Allegati: </th>
+            <th>{{ attch.altri_allegati.name|default:'--' }}</th>
+            <td>{% if attch.altri_allegati %}{{ attch.altri_allegati.size|default_if_none:'--'|filesizeformat }}{% else %}--{% endif %}</td>
+            <td>{% for k,v in time.items %}{% if k == attch.altri_allegati.name %}{{ v }}{% endif %}{% endfor %}</td>
+            <td class="actions">
+                <a {% if attch.altri_allegati %} href="{{ attch.altri_allegati.url }}"{% else %}--{% endif %} data-toggle="tooltip"  data-placement="right" title="Scarica Allegato" class="on-default edit-row"><i class="zmdi zmdi-download"></i></a>
+{#                <a href="" data-toggle="tooltip"  data-placement="right" title="Elimina Allegato" class="user-list-item" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>#}
+{#       </td>#}
+        </tr>
+
+
+
+        {% endfor %}
+        </tbody>
+    </table>
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+         style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">Modal Heading</h4>
+                </div>
+                <div class="modal-body">
+                    <h4>Text in a modal</h4>
+                                        <script>
+                var value = document.getElementById('prova').getAttribute('forse');
+                var or = value
+                console.log(or);
+{#                #var newdr = new FileReader();#}
+{#                newdr.onload = function(e){#}
+{#                    var ert = e.target.result;#}
+                $('#viewer').attr('src',"/media/prova5/")
+                </script>
+                </div>
+
+                    <div style="clear:both">
+
+                        <iframe id="viewer"  src="" frameborder="0" scrolling="no" width="400" height="600"></iframe>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-custom waves-effect waves-light">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+{% endblock %}

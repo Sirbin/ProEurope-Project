@@ -1,0 +1,66 @@
+{% extends 'base/index.html'%}
+
+
+{% block title %} Profilo Utente Modifica {% endblock %}
+
+{% block content %}
+
+{% include 'base/settingButton.html' %}
+     <form method='post' action=".">{% csrf_token %}
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-color panel-default-site">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Informazioni Personali</h3>
+                        </div>
+                        <div class="panel-body">
+                           {% include 'userManagement/page-user-password-button.html' %}
+                            <div class="form-group">
+                                <div class="row">
+							    <div class="col-xs-6">
+                                    <b>{{ form.first_name.label }}</b>
+								       {{ form.first_name }}
+                                    <div id="error-log"><strong>{{ form.first_name.errors }}</strong></div>
+							    </div>
+                                <div class="col-xs-6">
+                                    <b>{{ form.last_name.label }}</b>
+								       {{ form.last_name }}
+                                    <div id="error-log"><strong>{{ form.last_name.errors }}</strong></div>
+							    </div>
+                                </div>
+                                <div class="row">
+                                <div class="col-xs-6">
+                                    <b>{{ form.telefono.label }}</b>
+								       {{ form.telefono }}
+                                    <div id="error-log"><strong>{{ form.telefono.errors }}</strong></div>
+							    </div>
+                                <div class="col-xs-6">
+                                    <b>{{ form.email.label }}</b>
+								       {{ form.email|capfirst }}
+                                    <div id="error-log"><strong>{{ form.email.errors }}</strong></div>
+							    </div>
+                                    <div class="col-xs-12">
+                                        <b>{{ form.note.label }}</b>
+								           {{ form.note }}
+                                    </div>
+                                </div>
+                                </div>
+						    </div>
+                        </div>
+                    </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <button type="submit" class="btn btn-custom btn-rounded waves-effect waves-success">Salva Utente</button>
+                            </div>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+
+        </div>
+    </form>
+
+{% endblock %}

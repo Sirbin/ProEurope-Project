@@ -1,0 +1,40 @@
+{% extends 'login/page-login.html' %}
+
+{% block title %}Registrazione Done{% endblock %}
+
+{% block content %}
+
+        <div class="wrapper-page">
+        	<div class="m-t-30 card-box">
+                <div class="text-center">
+                    <h4 class="text-uppercase font-bold m-b-0">Success !!</h4>
+                </div>
+                <div class="panel-body text-center">
+                    <i class="zmdi zmdi-check-circle text-success" style="font-size: 48px;"></i>
+					<p class="text-muted font-13 m-t-20"> L'utente è stato inserito correttamente! </p>
+                </div>
+
+            </div>
+            <!-- end card-box -->
+        </div>
+        <!-- end wrapper page -->
+        <div class="row">
+				<div class="col-sm-12 text-center">
+					<p class="text-muted">Riceverai una E-mail da parte dello staff che ti comunicherà quando il tuo Profilo sarà <b>Attivo</b></p>
+				</div>
+        <div class="row">
+				<div class="col-sm-12 text-center">
+					<p class="text-muted">Torna a Pagina<a href="{% url 'login' %}" class="text-primary m-l-5"><b>Login</b></a></p>
+				</div>
+		</div>
+        <script>
+            $(document).ready(function(){
+                setTimeout(function(){
+                    window.location.href = "{% url 'login'%}"
+                },2000);
+            });
+
+        </script>
+        </div>
+
+{% endblock %}

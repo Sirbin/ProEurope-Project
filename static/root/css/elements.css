@@ -1,0 +1,87 @@
+
+@font-face {
+    font-family: 'Kaushan';
+    src: url('/static/static/fonts/Kaushan.woff2');
+    src: local('KaushanScript-Regular'),url('/static/static/fonts/Kaushan.otf') format('opentype');
+}
+.t-c-textEuro{
+    color: #0f1ebf;
+}
+
+
+.logoEuro{
+    font-family: 'Kaushan';
+    font-size: 2em;
+    margin-top: 10px;
+
+}
+
+#error-log .errorlist{
+    margin-top: 10px;
+    list-style: none;
+    background-color: rgba(240, 80, 80, 0.2);
+    border-color: rgba(240, 80, 80, 0.3);
+    color: #e96154;
+}
+
+.errorlist {
+
+
+    list-style: none;
+}
+
+#datatable-responsive .actions a {
+
+    padding: 5px;
+}
+
+#data .actions a{
+    padding: 5px;
+}
+#data .fa-fa-pencil{
+    color: #3ec845;
+}
+#data .fa-trash-o{
+    color: #e96154;
+}
+
+#datatable-responsive .fa-trash-o {
+    color: #e96154;
+}
+#datatable-responsive .fa-fa-pencil {
+    color: #3ec845;
+}
+.panel-default-site > .panel-heading {
+    background-color: #2196f3;
+}
+
+#m-t-help_text {
+    margin-left: -20px;
+    margin-top: 10px;
+    color: #2196f3;
+}
+#m-t-help_text-date {
+    margin-left: 7px;
+    color: #2196f3;
+}
+.tooltip-inner {
+  background-color: #8447cf;
+}
+
+[data-placement="top"] + .tooltip > .tooltip-arrow {
+  border-top-color: #8447cf;
+}
+
+[data-placement="right"] + .tooltip > .tooltip-arrow {
+  border-right-color: #8447cf;
+}
+
+[data-placement="bottom"] + .tooltip > .tooltip-arrow {
+  border-bottom-color: #8447cf;
+}
+
+[data-placement="left"] + .tooltip > .tooltip-arrow {
+  border-left-color: #8447cf;
+}
+
+/**/

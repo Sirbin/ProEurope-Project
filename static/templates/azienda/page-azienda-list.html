@@ -1,0 +1,254 @@
+{% extends 'base/index.html' %}
+
+
+{% block content %}
+
+ {% include 'base/settingButton.html' %}
+ {% if messages %}
+        {% for message in messages  %}
+            <div class="row">
+                {% if forloop.first %}
+                <div {% if message.tags %}class="alert alert-{{ message.tags }} alert-dismissable"{% endif %} id="close">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <strong>{{ message }}</strong>
+                </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+
+ <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-color panel-default-site">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Lista Azienda</h3>
+                    </div>
+                    <div class="panel-body">
+                    <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card-box table-responsive">
+                                    <div class="col-sm-12">
+                                      <div class="m-b-30">
+                                        <a class="btn btn-primary btn-rounded waves-effect waves-light" data-toggle="tooltip"  data-placement="right" title="Aggiungi Azienda" href="{% url 'azienda_add' %}"><i class="zmdi zmdi-city"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <table id="datatable-responsive" class="table table-bordered dt-responsive m-0">
+
+                                                    <thead>
+                                                    <tr>
+                                                        <th style="width: 10px;">Azienda</th>
+                                                        <th style="width: 100px;">Città</th>
+                                                        <th style="width: 10px">N.Dipendenti </th>
+                                                        <th>N.Clienti</th>
+                                                        <th>Telefono</th>
+                                                        <th>Email</th>
+                                                        <th>Sito Web</th>
+                                                        <th>Azioni</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for company in object_list %}
+                                                    <tr>
+
+                                                            <td>{{ company.denominazione }}</td>
+                                                            <td>{{ company.citta }}</td>
+                                                            <td>{% for key , value in number.items %}{% if key == company.denominazione %}<a href=""><strong>{{ value }}</strong></a>{% endif %}{% endfor %}</td>
+                                                            <td>{% for key , value in number_cli.items %}{% if key == company.denominazione %}<a href=""><strong>{{ value }}</strong></a>{% endif %}{% endfor %}</td>
+                                                            <td>{{ company.telefonoFisso1 }}</td>
+                                                            <td>{{ company.email }}</td>
+                                                            <td><a href="{{ company.url_sito }}"> {{ company.url_sito }}</a></td>
+                                                            <td class="actions">
+                                                               <a href="{% url 'azienda_edit' pk=company.id %}" data-toggle="tooltip"  data-placement="right" title="Modifica Azienda" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                                               <a href="{% url 'azienda_delete' pk=company.id %}" data-toggle="tooltip"  data-placement="right" title="Elimina Azienda" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                                                            </td>
+                                                    </tr>
+                                                     <script type="application/javascript">
+
+                                                             function DeleteAzi(id_azie) {
+                                                                 swal({
+                                                                             title: "Are you sure?",
+                                                                             text: "You will not be able to recover this imaginary file!",
+                                                                             type: "warning",
+                                                                             showCancelButton: true,
+                                                                             confirmButtonColor: "#DD6B55",
+                                                                             confirmButtonText: "Yes, delete it!",
+                                                                             closeOnConfirm: false,
+                                                                             html: true
+                                                                         },
+                                                                         function () {
+                                                                             $.ajax({
+
+                                                                                 method: 'GET',
+                                                                                 url: '/azienda/user/delete/',
+                                                                                 data: {
+                                                                                     userdelete: id_azie,
+                                                                                 },
+                                                                                 Datatype: 'json',
+                                                                                 success: function (data) {
+
+                                                                                     swal({
+                                                                                         title: 'Eliminato',
+                                                                                         text: "<strong>data['success']</strong>",
+                                                                                         type: 'success',
+                                                                                         html: true
+                                                                                     });
+
+                                                                                 },
+                                                                                 error: function (xhr, errmsg, err) {
+                                                                                     alert(xhr.status + ':' + xhr.responceText);
+                                                                                 }
+
+                                                                             });
+
+                                                                         });
+
+
+                                                             }
+
+                                                     </script>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="panel panel-color panel-default-site">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Lista Utente e Clienti per Azienda</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="card-box">
+                                    <div class="dropdown pull-right">
+                                        <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="zmdi zmdi-more-vert"></i>
+                                        </a>
+                                        {% if request.user.is_superuser %}
+                                            <ul class="dropdown-menu" role="menu">
+                                            {% for value in number %}
+                                            <li><a href="javascript:userCompany('{{ value|safe }}')">{{ value }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                        {% else %}
+                                        <ul class="dropdown-menu" role="menu">
+                                            {% for denominazione in company_list %}
+                                            <li><a href="javascript:userCompany('{{ denominazione|safe }}')">{{ denominazione }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                        {% endif %}
+
+                                    </div>
+                                    <script type="application/javascript">
+                                            //Funzione per richiamare i clienti per Azienda
+                                            function userCompany(valore) {
+
+                                                $.ajax({
+                                                    url: '/azienda/user/',
+                                                    method: 'GET',
+                                                    data: {
+                                                        usertotali: valore,
+                                                        },
+                                                        dataType: 'json',
+                                                    success:function(data){
+                                                            $('#name_user > li ').remove();
+                                                            if ($('#id_user').length == 0){
+                                                                    $.each(data[valore],function(i){
+                                                                        var li = $('<li>').addClass("list-group-item").attr('id','id_user').appendTo('#name_user');
+                                                                        var a = $('<a/>').addClass("user-list-item").attr('href','{% url 'utenti_edit' pk=1 %}'.replace(/1/,data[valore][i][1])).appendTo(li);
+                                                                        var div = $('<div/>').addClass("user-desc").appendTo(a);
+                                                                        var span = $('<span>').text(data[valore][i][0]).appendTo(div);
+                                                                        $('#azi').text('Azienda'+':'+valore);
+                                                                    });
+                                                            }
+                                                    },
+                                                    error:function(xhr,errmsg,err){
+                                                        alert(xhr.status+':'+xhr.responceText);
+                                                    }
+                                                });
+                                            }
+                                    </script>
+
+                                    <h4 class="header-title m-t-0 m-b-30" id="azi">Utenti Azienda</h4>
+                                    <h2 class="header-title ">Utenti</h2>
+                                    <ul id=name_user class="list-group m-b-0 user-list">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="card-box">
+                                    <div class="dropdown pull-right">
+                                        <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="zmdi zmdi-more-vert"></i>
+                                        </a>
+                                        {% if request.user.is_superuser %}
+                                        <ul class="dropdown-menu" role="menu">
+                                            {% for value in number_cli %}
+                                            <li><a href="javascript:userClient('{{ value|safe }}')">{{ value }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                        {% else %}
+                                            <ul class="dropdown-menu" role="menu">
+                                            {% for denominazione in company_list %}
+                                            <li><a href="javascript:userClient('{{ denominazione|safe }}')">{{ denominazione }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </div>
+                                    <script type="application/javascript">
+                                            //Funzione per richiamare i clienti per User
+                                            function userClient(valore) {
+
+                                                $.ajax({
+                                                    url: '/azienda/cli/',
+                                                    method: 'GET',
+                                                    data: {
+                                                        clitotali: valore,
+                                                        },
+                                                        dataType: 'json',
+                                                    success:function(data){
+                                                            $('#name_cli > li ').remove();
+                                                            if ($('#id_cli').length == 0){
+
+                                                                    $.each(data[valore],function(i){
+                                                                        console.log(data[valore][i][0])
+                                                                        var li = $('<li>').addClass("list-group-item").attr('id','id_cli').appendTo('#name_cli');
+                                                                        var a = $('<a/>').addClass("user-list-item").attr('href','{% url 'clienti_edit' pk=1 %}'.replace(/1/,data[valore][i][1])).appendTo(li);
+                                                                        //var a = $('<a/>').addClass("user-list-item").attr('href','{% url 'utenti_edit' pk=1 %}'.replace(/1/,data[valore][i][1])).appendTo(li);
+
+                                                                        var div = $('<div/>').addClass("user-desc").appendTo(a);
+                                                                        var span = $('<span>').text(data[valore][i][0]).appendTo(div);
+                                                                        $('#cli').text('Azienda'+':'+valore);
+                                                                    });
+                                                            }
+                                                    },
+                                                    error:function(xhr,errmsg,err){
+                                                        alert(xhr.status+':'+xhr.responceText);
+                                                    }
+                                                });
+                                            }
+                                    </script>
+
+                                    <h4 class="header-title m-t-0 m-b-30" id="cli">Clienti Azienda</h4>
+                                    <h2 class="header-title ">Clienti</h2>
+                                    <ul id=name_cli class="list-group m-b-0 user-list">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+ </div>
+{% endblock %}

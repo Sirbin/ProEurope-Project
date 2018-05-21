@@ -1,0 +1,10 @@
+{% extends 'base/index.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12"></div>
+            <h4 class="page-title">Sessione Termina <span>{{ Saluti }}</span></h4>
+            <a href="{% url 'login' %}"><p>Torna alla Pagina si Log in</p></a>
+        </div>
+    </div>
+{% endblock %}
