@@ -22,6 +22,7 @@ class getFilterCompanyMixin(object):
 
     '''
     Mixin per recuperare le liste della azienda in base all'utente loggato
+    
     '''
 
     def get_queryset(self):

@@ -20,22 +20,22 @@ from azienda.models import Company
 import datetime
 
 
-class prova(TemplateView,PermissionDenied):
-      '''
-      Semplice Prova da Cancellare
-      '''
-      login_url = reverse_lazy('userManagement')
-
-      template_name = 'base/index.html'
-
-      permission_denied_message = 'Errore'
-
-      permission_required = 'is_staff'
-
-      def get_context_data(self, **kwargs):
-          contenxt = super(prova,self).get_context_data(**kwargs)
-          contenxt['userlog'] = UserProfile.get_username(self.request.user)
-          return contenxt
+# class prova(TemplateView,PermissionDenied):
+#       '''
+#       Semplice Prova da Cancellare
+#       '''
+#       login_url = reverse_lazy('userManagement')
+#
+#       template_name = 'base/index.html'
+#
+#       permission_denied_message = 'Errore'
+#
+#       permission_required = 'is_staff'
+#
+#       def get_context_data(self, **kwargs):
+#           contenxt = super(prova,self).get_context_data(**kwargs)
+#           contenxt['userlog'] = UserProfile.get_username(self.request.user)
+#           return contenxt
 
 @login_required()
 def dashboard(request):
