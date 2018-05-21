@@ -66,7 +66,9 @@ class getFilterUserMixin(object):
 
 class DashboardUser(LoginRequiredMixin,getFilterUserMixin,ListView):
 
-
+        '''
+        Pagina Princiapale
+        '''
 
         model = ClientUserCompany
 
