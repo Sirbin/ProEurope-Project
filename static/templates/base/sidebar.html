@@ -22,7 +22,11 @@
                                 {% url 'clienti_lista' as cli %}
                                 <a {% if request.path == cli %}class="waves-effect active" {% endif %} href="{{ cli }}"><i class="zmdi zmdi-accounts-list"></i> <span>Pratiche Clienti </span> </a>
                             </li>
+                            <li class="has_sub active">
 
+                                {% url 'modulistica' as modul %}
+                                <a {% if request.path == cli %}class="waves-effect active" {% endif %} href="{{ modul }}"><i class="zmdi zmdi-book"></i> <span>Modulistica </span> </a>
+                            </li>
                             <li class="text-muted menu-title">Gestione Utenti e Gruppi</li>
 
                             <li class="has_sub">
