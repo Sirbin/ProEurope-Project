@@ -15,7 +15,7 @@ from client.views import clientCreate,clientList,clientDelete,clientAttach,clien
 from azienda.views import aziendaAdd,aziendaList,aziendaDelete,aziendaUser,aziendaEdit,aziendaCli,aziendaDel
 from gruppi.views import groupsAdd,groupsList,groupDelete,groupEdit,groupDel
 from registrationuSER.views import confermRegistrationDoneok,registration,completeRegistrazione
-
+from modulistica.views import addforms, getNameModul
 #static
 from django.conf.urls.static import static
 
@@ -96,6 +96,11 @@ urlpatterns = [
     #Client Attachments
     url(r'^client/attachments/(?P<pk>\d+)/$',clientAttach.as_view(),name='clienti_attach'),
     url(r'^client/attachments/(?P<pk>\d+)/all/$',zipAllattch.as_view(),name='clienti_attach_all'),
+
+    #Modulistica
+    url(r'^modulistica/create/$',addforms.as_view(),name='modulistica'),
+    url(r'^modulistica/create/(?P<filename>.*)/$',getNameModul.as_view(),name='get'),
+
 ]  + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
 

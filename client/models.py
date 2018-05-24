@@ -28,6 +28,8 @@ class CreateFolderUser(FileSystemStorage):
 
     path_create_zip_proof = os.path.join(os.path.dirname(settings.ZIP_ROOT), 'zip')
 
+    path_create_form = os.path.join(os.path.dirname(settings.FORM_ROOT), 'forms')
+
     def create_zip_file(self,name):
         '''
         Creazione del file zip
@@ -106,9 +108,12 @@ class CreateFolderUser(FileSystemStorage):
                         print(os.path.join(self.path_create,file))
                         return file
 
-                return 'Errore ne copiare il file'
+                return 'Errore nel copiare il file'
         return False
 
+    def get_file_module(self,name):
+
+        pass
 
     def exists_file(self,name,name_zip=None):
         if name in os.listdir(os.path.join(os.path.dirname(settings.MEDIA_ROOT),'media')) or os.listdir(os.path.join(os.path.dirname(settings.TMP_ROOT),'tmp')) :
@@ -120,12 +125,18 @@ class CreateFolderUser(FileSystemStorage):
             return True
         return False
 
+    @classmethod
+    def save_file(self,file):
 
-
-    #def exists_file(self,name):
-    #    if name in os.listdir(os.path.join(os.path.dirname(settings.MEDIA_ROOT),'media')):
-    #        return True
-    #    return False
+        '''
+        
+        :param file: file che inserito dal form 
+        :return: 
+        '''
+        destination = open(os.path.join(self.path_create_form,file.name), 'wb+')
+        for chunk in file.chunks():
+            destination.write(chunk)
+        destination.close()
 
     def create_folder(self,name=None):
         if not self.exists_file(name):

@@ -1,0 +1,64 @@
+{% extends 'base/index.html' %}
+
+{% block title %} Lista Clienti {% endblock %}
+
+
+{% block content%}
+
+{% include 'base/settingButton.html' %}
+
+ {% if messages %}
+        {% for message in messages  %}
+            <div class="row">
+                {% if forloop.first %}
+                <div {% if message.tags %}class="alert alert-{{ message.tags }} alert-dismissable"{% endif %} id="close">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <strong>{{ message }}</strong>
+                </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+ {% endif %}
+
+<div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div class="panel panel-color panel-default-site">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Aggiungi Modulo</h3>
+                        </div>
+
+                        <div class="panel-body">
+                        <form method='post' action="{% url 'modulistica' %}" enctype="multipart/form-data">{% csrf_token %}
+                            <div class="col-xs-6">
+                                <b>{{ form.modulistica.label }}</b>
+                                <input type="file" name="modulistica" class="form-control" id="modulistica"/>
+                                    <div id="error-log"><strong>{{ form.modulistica.errors }}</strong></div>
+                            </div>
+                            <div class="col-xs-6">
+                                <input type="submit" value="Salva" class="fileupload btn btn-primary" style="position: relative; overflow: hidden; margin: 22px"/>
+                        </div>
+                        </form>
+                        </div>
+                </div>
+                <div class="panel panel-color panel-default-site">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Modulistica</h3>
+                        </div>
+
+                        <div class="panel-body">
+
+                        {% for m in modulistica %}
+                                <a href="{% url 'get' filename=m %}">{{ m }}</a>
+
+                        {% endfor %}
+
+                        </div>
+                </div>
+
+
+            </div>
+        </div>
+ </div>
+{% endblock %}

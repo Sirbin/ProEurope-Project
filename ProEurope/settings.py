@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'guardian',
     'client',
     'multiselectfield',
+    'modulistica',
 ]
 
 
@@ -174,6 +175,8 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR),'ProEurope-Project','static
 TMP_ROOT = os.path.join(os.path.dirname(BASE_DIR),'ProEurope-Project','tmp')
 
 ZIP_ROOT = os.path.join(os.path.dirname(BASE_DIR),'ProEurope-Project','zip')
+
+FORM_ROOT = os.path.join(os.path.dirname(BASE_DIR),'ProEurope-Project','forms')
 
 MEDIA_URL = '/media/'
 
