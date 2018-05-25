@@ -64,6 +64,9 @@ class getNameModul(LoginandPermissionMixin,View):
     '''
      Scarica il File Pdf corrispondente
     '''
+
+    permission_required = ('client.add_clientusercompany',)
+
     def dispatch(self, request, *args, **kwargs):
         self.getPdf = kwargs['filename']
 
