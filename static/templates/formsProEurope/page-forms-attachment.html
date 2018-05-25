@@ -23,7 +23,7 @@
 <div class="container">
         <div class="row">
             <div class="col-sm-12">
-
+                {% if user.is_superuser %}
                 <div class="panel panel-color panel-default-site">
                         <div class="panel-heading">
                             <h3 class="panel-title">Aggiungi Modulo</h3>
@@ -42,6 +42,7 @@
                         </form>
                         </div>
                 </div>
+                {% endif %}
                 <div class="panel panel-color panel-default-site">
                         <div class="panel-heading">
                             <h3 class="panel-title">Modulistica</h3>

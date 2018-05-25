@@ -29,7 +29,7 @@ class addforms(LoginandPermissionMixin, FormView):
     form_class = UploadFileForm
 
 
-    #permission_required = ('client.add_clientusercompany',)
+    permission_required = ('client.add_clientusercompany',)
 
 
     def get_context_data(self, **kwargs):
