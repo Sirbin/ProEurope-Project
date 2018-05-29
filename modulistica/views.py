@@ -46,13 +46,18 @@ class addforms(LoginandPermissionMixin, FormView):
         return c
 
     def form_valid(self, form):
-        print(self.request.FILES, CreateFolderUser.path_create_form)
+
+
         CreateFolderUser.save_file(self.request.FILES['modulistica'])
-        print(self.request.FILES,CreateFolderUser.path_create_form)
+
         #form.save()
         #update_session_auth_hash(self.request)
         return super(addforms, self).form_valid(form)
 
+
+    def form_invalid(self, form):
+        print(self.request.FILES)
+        return super(addforms, self).form_invalid(form)
 
     def get_success_url(self, **kwargs):
         messages.success(self.request, "Modulistica Salvata con successo")
@@ -81,3 +86,11 @@ class getNameModul(LoginandPermissionMixin,View):
         response['Content-Disposition'] = 'attachment; filename="%s"' % self.getPdf
         getPdfFile.close()
         return response
+
+
+class delNameModul(getNameModul):
+    '''
+        Cancella i moduli in base al nome    
+    '''
+    pass
+

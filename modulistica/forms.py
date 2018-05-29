@@ -4,7 +4,7 @@ from registration.forms import RegistrationForm
 
 
 class UploadFileForm(forms.Form):
-    modulistica = forms.FileField(label='Aggiungi Modulistica', required=False,)
+    modulistica = forms.FileField(label='Aggiungi Modulistica', required=True, error_messages={'required':'Il campo non può essere vuoto'},)
 
 
 
