@@ -88,9 +88,32 @@ class getNameModul(LoginandPermissionMixin,View):
         return response
 
 
-class delNameModul(getNameModul):
+class delNameModul(View):
     '''
         Cancella i moduli in base al nome    
     '''
-    pass
+    file = CreateFolderUser()
+
+    #permission_required = ('client.delete_clientusercompany',)
+
+    template_name = 'formsProEurope/page-forms-delete.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.getPdf = kwargs['filename']
+
+        return super(delNameModul, self).dispatch(request, args, kwargs)
+
+    def get(self,request,*args,**kwargs):
+
+        context_path = {
+            'file': self.getPdf
+        }
+        f = CreateFolderUser.path_create_form
+        try:
+            os.remove((os.path.join(f, self.getPdf)))
+        except:
+            error_messages = 'Impossibile eliminare il file'
+            context_path['error'] = error_messages
+
+        return render(request,template_name=self.template_name, context=context_path)
 

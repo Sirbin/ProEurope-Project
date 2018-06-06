@@ -51,7 +51,7 @@
                         <div class="panel-body">
 
                         {% for m in modulistica %}
-                                <a href="{% url 'get' filename=m %}">{{ m }}</a><i class=""></i><br>
+                            <a class="on-editing cancel-row" href="{% url 'get' filename=m %}">{{ m }}</a>{% if user.is_superuser %}<a href="{% url 'del' filename=m %}" ><i class="fa fa-times" id='delete-name' style="margin-left: 10px;cursor: pointer"></i></a>{% endif %}<br>
 
                         {% endfor %}
 
