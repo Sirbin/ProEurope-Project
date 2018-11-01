@@ -148,7 +148,7 @@ class CreateFolderUser(FileSystemStorage):
         :return: 
         '''
 
-        destination = open(os.path.join(os.path.join(path_files, name_folder), file.name+'_'+file_name), 'wb+')
+        destination = open(os.path.join(os.path.join(path_files, name_folder), file_name+'_'+file.name), 'wb+')
         for chunk in file.chunks():
             destination.write(chunk)
         destination.close()
