@@ -45,7 +45,7 @@ class clientAttached(LoginandPermissionMixin,FormView):
           c['allegato'] = analytics_list
           c['id'] = self.kwargs.get('pk')
           c['set'] = settings.MEDIA_ROOT
-          print(c)
+
           return c
 
       def get_success_url(self, **kwargs):
