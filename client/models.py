@@ -59,7 +59,6 @@ class CreateFolderUser(FileSystemStorage):
                     create_zipfile_for_client_def.write(os.path.join(dirname, filename))
            create_zipfile_for_client_def.close()
 
-
     def create_zip_file_altri_allegati(self,oby,name):
 
         if self.exists_file(name+'_altri_allegati'+'.zip'):
@@ -126,14 +125,30 @@ class CreateFolderUser(FileSystemStorage):
         return False
 
     @classmethod
-    def save_file(self,file):
+    def save_file(self,file,path_files):
 
         '''
         
-        :param file: file che inserito dal form 
+        :param file: File Inserito dal form della Modulistica
         :return: 
         '''
-        destination = open(os.path.join(self.path_create_form,file.name), 'wb+')
+
+        destination = open(os.path.join(path_files, file.name), 'wb+')
+
+        for chunk in file.chunks():
+            destination.write(chunk)
+        destination.close()
+
+    @classmethod
+    def save_file_denominazione(self, file, file_name, path_files, name_folder):
+
+        '''
+
+        :param file: File che Inserito dal form degli Allegati
+        :return: 
+        '''
+
+        destination = open(os.path.join(os.path.join(path_files, name_folder), file.name+'_'+file_name), 'wb+')
         for chunk in file.chunks():
             destination.write(chunk)
         destination.close()

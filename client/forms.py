@@ -14,8 +14,6 @@ class pro(ITVatNumberField):
 class clientForm(forms.ModelForm):
 
 
-
-
     tipologia_beneficiario = (
         ('1','Associazione'),
         ('2','Onlus'),
@@ -183,6 +181,13 @@ class clientForm(forms.ModelForm):
                                      queryset=UserProfile.objects.all(),
                                               widget=forms.Select(attrs={'class':'form-control'} )
         )
+
+
+class attachedClientForm(forms.Form):
+    nome_allegato = forms.CharField(label='Nome Allegato',required=False, error_messages={'required':'Il campo non può essere vuoto'})
+    allegato = forms.FileField(label='Aggiungi Allegato', required=True, error_messages={'required':'Il campo non può essere vuoto'},)
+
+
 
 
 

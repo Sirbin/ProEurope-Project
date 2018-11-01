@@ -1,13 +1,13 @@
 #Django
 from django.core.urlresolvers import reverse_lazy,reverse
-from django.shortcuts import render,HttpResponse,HttpResponseRedirect
+from django.shortcuts import render,HttpResponse,HttpResponseRedirect, redirect
 from django.conf import settings
-from django.views.generic import TemplateView,View,CreateView,UpdateView,DeleteView,ListView,DetailView
+from django.views.generic import TemplateView,View,CreateView,UpdateView,DeleteView,ListView,DetailView, FormView
 from django.views.generic.detail import SingleObjectMixin
 from django.contrib import messages
 from django.http import JsonResponse
 #Base
-from .forms import clientForm
+from .forms import clientForm, attachedClientForm
 from .models import ClientUserCompany,CreateFolderUser
 from user.views import LoginandPermissionMixin
 from user.models import UserProfile
@@ -15,8 +15,99 @@ from azienda.models import Company
 #External
 import os
 
+class clientAttached(LoginandPermissionMixin,FormView):
+
+      template_name = 'client/page-client-attachments-new.html'
+
+      permission_required = ('client.add_clientusercompany',)
+
+      form_class = attachedClientForm
+
+      def dispatch(self, request, *args, **kwargs):
+
+          self.get_denominazione = ClientUserCompany.objects.get(pk=self.kwargs.get('pk'))
+
+          return super(clientAttached,self).dispatch(request,args,kwargs)
+
+      def form_valid(self, form):
+          nome_file = self.request.POST.get('nome_allegato',"")
+          CreateFolderUser.save_file_denominazione(self.request.FILES['allegato'],nome_file,CreateFolderUser.path_create, str(self.get_denominazione))
+
+          return super(clientAttached, self).form_valid(form)
+
+      def get_context_data(self, **kwargs):
+          '''
+              Recupera i file al'interno della cartella del Cliente
+          '''
+
+          analytics_list = os.listdir(os.path.join(CreateFolderUser.path_create,str(self.get_denominazione)))
+          c = super(clientAttached, self).get_context_data(**kwargs)
+          c['allegato'] = analytics_list
+          c['id'] = self.kwargs.get('pk')
+          c['set'] = settings.MEDIA_ROOT
+          print(c)
+          return c
+
+      def get_success_url(self, **kwargs):
+
+          messages.success(self.request, "Allegati Salvati con successo")
+
+          return reverse('client_attach_new', kwargs={'pk':self.kwargs.get('pk')})
+
+class getNameAttach(LoginandPermissionMixin,View):
+    '''
+     Scarica l'allegato corrispondente 
+    '''
+
+    permission_required = ('client.add_clientusercompany',)
+
+    def dispatch(self, request, *args, **kwargs):
+        self.getPdf = kwargs['filename']
+
+        self.get_denominazione = ClientUserCompany.objects.get(pk=self.kwargs.get('pk'))
+
+        return super(getNameAttach,self).dispatch(request, args, kwargs)
+
+    def get(self,request,*args,**kwargs):
 
 
+        f = CreateFolderUser.path_create
+        getPdfFile = open(os.path.join(os.path.join(f, str(self.get_denominazione)), self.getPdf),'rb')
+        response = HttpResponse(getPdfFile.read(),content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="%s"' % self.getPdf
+        getPdfFile.close()
+        return response
+
+class delNameAttach(View):
+    '''
+        Cancella gli Allegati     
+    '''
+
+    # permission_required = ('client.delete_clientusercompany',)
+
+    template_name = 'client/page-client-attachment-client-delete.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.getPdf = kwargs['filename']
+
+        self.get_denominazione = ClientUserCompany.objects.get(pk=self.kwargs.get('pk'))
+
+        return super(delNameAttach, self).dispatch(request, args, kwargs)
+
+    def get(self, request, *args, **kwargs):
+
+        context_path = {
+            'file': self.getPdf,
+            'id': self.kwargs.get('pk')
+        }
+        f = CreateFolderUser.path_create
+        try:
+            os.remove((os.path.join(os.path.join(f, str(self.get_denominazione)), self.getPdf)))
+        except:
+            error_messages = 'Impossibile eliminare il file'
+            context_path['error'] = error_messages
+
+        return render(request, template_name=self.template_name, context=context_path)
 
 class clientCreate(LoginandPermissionMixin,CreateView,SingleObjectMixin):
 
@@ -26,6 +117,7 @@ class clientCreate(LoginandPermissionMixin,CreateView,SingleObjectMixin):
     permission_required = ('client.add_clientusercompany',)
 
     model = ClientUserCompany
+
 
     form_class = clientForm
 
@@ -49,16 +141,21 @@ class clientCreate(LoginandPermissionMixin,CreateView,SingleObjectMixin):
         return kwargs
 
 
+
     def form_valid(self, form):
+
+        f = CreateFolderUser()
+        f.create_folder(name=form.cleaned_data['denominazione'])
 
         return super(clientCreate,self).form_valid(form)
 
-
     def get_success_url(self,**kwargs):
 
-        messages.success(self.request,"L'utente %s è stato salvato con successo" % self.object)
+        self.mypk = self.get_form_kwargs().get('instance')
 
-        return reverse('clienti_lista')
+        messages.success(self.request,"L'utente è stato salvato con successo" )
+
+        return reverse('client_attach_new', kwargs={'pk':self.mypk.pk   })
 
 class clientUpdate(LoginandPermissionMixin,UpdateView,CreateFolderUser):
 
@@ -267,8 +364,6 @@ class clientAttachDelete(DeleteView):
 
 
        return reverse('clienti_lista')
-
-
 
 class clientDel(LoginandPermissionMixin,View,CreateFolderUser):
 
