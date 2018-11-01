@@ -182,20 +182,18 @@ class clientUpdate(LoginandPermissionMixin,UpdateView,CreateFolderUser):
             form_all.altri_allegati = get_zip
             form_all.save()
 
-
-        #f = CreateFolderUser()#
-
-        #form_all = form.save(commit=False)
-        #f.create_zip_file_altri_allegati(get_all_file_to_altri_allegati, self.get_denominazione.denominazione)#
-        #prova = f.get_file_zip(self.get_denominazione.denominazione)#
-        #form_all.denominazione  = form.cleaned_data['denominazione']
-        #form_all.altri_allegati = prova#
-        #form_all.save()
         return super(clientUpdate,self).form_valid(form)
 
     def get_list(self,list):
         return list[0]
 
+    def get_context_data(self, **kwargs):
+
+        c = super(clientUpdate,self).get_context_data(**kwargs)
+        c['id'] = self.kwargs.get('pk')
+        c['user'] = self.get_denominazione
+
+        return c
 
     def dispatch(self, request, *args, **kwargs):
         self.get_denominazione = ClientUserCompany.objects.get(pk=self.kwargs.get('pk'))
@@ -223,6 +221,7 @@ class clientUpdate(LoginandPermissionMixin,UpdateView,CreateFolderUser):
         kwargs = super(clientUpdate, self).get_form_kwargs()
         kwargs['username'] = self.request.user.username
         kwargs['group'] = self.mio_groups
+
         return kwargs
 
     def get_success_url(self,**kwargs):
