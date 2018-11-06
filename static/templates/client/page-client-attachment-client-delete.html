@@ -1,17 +1,16 @@
 {% extends 'base/index.html' %}
 
-{% block title%} Cancella Allegati {% endblock %}
+{% block title%} Elimina Allegati {% endblock %}
 
 {% block content%}
     {% include 'base/settingButton.html' %}
-    <div class="row">
-        <div class="col-xs-12">
-        <form method="post" action=".">{% csrf_token %}
-            <p>Vuoi eliminare il File  <strong>{{ nome }}</strong>  del cliente <strong>{{ object.user }} ?</strong></p>
-            <button class="btn btn-danger" type="submit" name="{{ nome }}" value="Elimina">Elimina</button>
-        </form>
-        </div>
-    </div>
 
+    <p>File <strong>{{ file }}</strong> Eliminato con Successo </p>
+
+    <script>
+    setTimeout(function(){
+        window.location.href = "{% url 'client_attach_new' pk=id %}";
+    },2000);
+    </script>
 
 {% endblock %}

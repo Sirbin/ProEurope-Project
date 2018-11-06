@@ -9,9 +9,11 @@ from user.forms import FormLogin,FormPassChange,SetPassword
 import user.views
 
 #Base
-from user.views import userList,userEdit,userDelete,userCreate,ProfileOnlyEdit,userChangePassword,DashboardUser,userDel,api_get_check_user, api_get_uncheck_user
+from user.views import userList,userEdit,userDelete,userCreate,ProfileOnlyEdit,userChangePassword,\
+    DashboardUser,userDel,api_get_check_user, api_get_uncheck_user
 
-from client.views import clientCreate,clientList,clientDelete,clientAttach,clientDel,clientUpdate,zipAllattch
+from client.views import clientCreate,clientList,clientDelete,clientAttach,clientDel,\
+    clientUpdate,zipAllattch, clientAttached, getNameAttach, delNameAttach
 from azienda.views import aziendaAdd,aziendaList,aziendaDelete,aziendaUser,aziendaEdit,aziendaCli,aziendaDel
 from gruppi.views import groupsAdd,groupsList,groupDelete,groupEdit,groupDel
 from registrationuSER.views import confermRegistrationDoneok,registration,completeRegistrazione
@@ -94,8 +96,12 @@ urlpatterns = [
     url(r'^client/user/delete/$',clientDel.as_view(),name='client_del_ajax'),
 
     #Client Attachments
-    url(r'^client/attachments/(?P<pk>\d+)/$',clientAttach.as_view(),name='clienti_attach'),
-    url(r'^client/attachments/(?P<pk>\d+)/all/$',zipAllattch.as_view(),name='clienti_attach_all'),
+    url(r'^client/attachmentss/(?P<pk>\d+)/$', clientAttach.as_view(),name='clienti_attach'),
+    url(r'^client/attachments/(?P<pk>\d+)/all/$', zipAllattch.as_view(),name='clienti_attach_all'),
+
+    url(r'^client/attachments/(?P<pk>\d+)/$', clientAttached.as_view(), name='client_attach_new'),
+    url(r'^client/attachments/get/(?P<pk>\d+)/(?P<filename>.*)/$', getNameAttach.as_view(),name='get_attach'),
+    url(r'^client/attachments/del/(?P<pk>\d+)/(?P<filename>.*)/$', delNameAttach.as_view(),name='del_attach'),
 
     #Modulistica
     url(r'^modulistica/create/$',addforms.as_view(),name='modulistica'),

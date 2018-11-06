@@ -1,0 +1,72 @@
+{% extends 'base/index.html' %}
+
+{% block title %} Lista Allegati {% endblock %}
+
+
+{% block content%}
+
+{% include 'base/settingButton.html' %}
+
+{% include 'client/page-client-attachments-button.html' with id=id %}
+
+
+ {% if messages %}
+        {% for message in messages  %}
+            <div class="row">
+                {% if forloop.first %}
+                <div {% if message.tags %}class="alert alert-{{ message.tags }} alert-dismissable"{% endif %} id="close">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <strong>{{ message }}</strong>
+                </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+ {% endif %}
+
+<div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-color panel-default-site">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Aggiungi Allegati {% if user %} {{ user }} {% endif %}</h3>
+                        </div>
+
+                        <div class="panel-body">
+                        <form method='post' action="" enctype="multipart/form-data">{% csrf_token %}
+                            <div class="col-xs-6">
+                                <b>{{ form.nome_allegato.label }}</b>
+                                <input type="text" name="nome_allegato" class="form-control" id="nome_allegato"/>
+                                    <div id="error-log"><strong>{{ form.nome_allegato.errors }}</strong></div>
+                            </div>
+                            <div class="col-xs-6">
+                                <b>{{ form.allegato.label }}</b>
+                                <input type="file" name="allegato" class="form-control" id="allegato"/>
+                                    <div id="error-log"><strong>{{ form.allegato.errors }}</strong></div>
+                            </div>
+                            <div class="col-xs-6">
+                                <input type="submit" value="Salva" class="fileupload btn btn-primary" style="position: relative; overflow: hidden; margin: 22px"/>
+                            </div>
+                        </form>
+                        </div>
+                </div>
+
+                <div class="panel panel-color panel-default-site">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Allegati {% if user %} {{ user }} {% endif %}</h3>
+                        </div>
+
+                        <div class="panel-body">
+                            {% for m in allegato %}
+                                <a class="on-editing cancel-row" href="{% url 'get_attach' pk=id filename=m %}">{{ m }}</a><a href="{% url 'del_attach' pk=id filename=m %}" ><i class="fa fa-times" id='delete-name' style="margin-left: 10px;cursor: pointer"></i></a><br>
+
+                            {% endfor %}
+
+
+                        </div>
+                </div>
+
+
+            </div>
+        </div>
+ </div>
+{% endblock %}

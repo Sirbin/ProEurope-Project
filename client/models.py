@@ -59,7 +59,6 @@ class CreateFolderUser(FileSystemStorage):
                     create_zipfile_for_client_def.write(os.path.join(dirname, filename))
            create_zipfile_for_client_def.close()
 
-
     def create_zip_file_altri_allegati(self,oby,name):
 
         if self.exists_file(name+'_altri_allegati'+'.zip'):
@@ -126,14 +125,30 @@ class CreateFolderUser(FileSystemStorage):
         return False
 
     @classmethod
-    def save_file(self,file):
+    def save_file(self,file,path_files):
 
         '''
         
-        :param file: file che inserito dal form 
+        :param file: File Inserito dal form della Modulistica
         :return: 
         '''
-        destination = open(os.path.join(self.path_create_form,file.name), 'wb+')
+
+        destination = open(os.path.join(path_files, file.name), 'wb+')
+
+        for chunk in file.chunks():
+            destination.write(chunk)
+        destination.close()
+
+    @classmethod
+    def save_file_denominazione(self, file, file_name, path_files, name_folder):
+
+        '''
+
+        :param file: File che Inserito dal form degli Allegati
+        :return: 
+        '''
+
+        destination = open(os.path.join(os.path.join(path_files, name_folder), file_name+'_'+file.name), 'wb+')
         for chunk in file.chunks():
             destination.write(chunk)
         destination.close()
@@ -189,6 +204,17 @@ class ClientUserCompany(models.Model,CreateFolderUser):
         ('11','Realizzazione Sito Web'),
         ('12','Altro'),
     )
+
+    stato_pratica = (
+        ('1','In Attesa di Documenti'),
+        ('2','Istruttoria'),
+        ('3','Banca'),
+        ('4','Non Finanziabile'),
+        ('5','Rinuncia'),
+        ('6','Completa')
+    )
+
+
 
     denominazione = models.CharField(verbose_name='Denominazioe Ditta',max_length=255)
     is_complete = models.BooleanField(verbose_name="Pratica Comletata", default=False)

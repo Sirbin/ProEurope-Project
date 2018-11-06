@@ -47,7 +47,7 @@
                                                         <th style="width: 150px">Dipendente </th>
                                                         <th style="width: 70px">Cellulare</th>
 {#                                                        <th style="width: 150px">Email</th>#}
-                                                        <th style="width: 50px">N.Allegati</th>
+{#                                                        <th style="width: 50px">N.Allegati</th>#}
                                                         <th style="width: 120px">Data Inserimento</th>
                                                         <th style="width: 120px"> Data Modifica</th>
                                                         <th style="width: 50px">Azioni</th>
@@ -62,12 +62,12 @@
                                                             <td>{{ client.user|capfirst|default:'Da inserire'|title }}</td>
                                                             <td>{{ client.cellulare1|phone2numeric }}</td>
 {#                                                            <td>{{ client.email|title }}</td>#}
-                                                            <td>{% for key,value in numero_allegati.items  %}{% if key == client.denominazione %}{{ value }} di 14 {% endif %}{% endfor %}</td>
+{#                                                            <td>{% for key,value in numero_allegati.items  %}{% if key == client.denominazione %}{{ value }} di 14 {% endif %}{% endfor %}</td>#}
                                                             <td>Data:{{ client.data_ins|date:'d-m-y'}}, Ore:{{client.data_ins|time:'H:i'}}</td>
                                                             <td>Data:{{ client.data_mod|date:'d-m-y'}}, Ore:{{client.data_mod|time:'H:i'}}</td>
                                                             <td class="actions">
                                                                 <a href="{% url 'clienti_edit' pk=client.id %}" data-toggle="tooltip"  data-placement="right" title="Modifica Cliente"  class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-                                                                <a href="{% url 'clienti_attach' pk=client.id %}" data-toggle="tooltip"  data-placement="right" title="Visualizza Allegati" class="on-default edit-row"><i class="zmdi zmdi-attachment-alt"></i></a>
+                                                                <a href="{% url 'client_attach_new' pk=client.id %}" data-toggle="tooltip"  data-placement="right" title="Visualizza Allegati" class="on-default edit-row"><i class="zmdi zmdi-attachment-alt"></i></a>
                                                                 <a href="{% url 'clienti_delete' pk=client.id %}" data-toggle="tooltip"  data-placement="right" title="Elimina Cliente" class="user-list-item" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
                                                             </td>
                                                     </tr>

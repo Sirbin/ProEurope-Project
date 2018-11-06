@@ -5,675 +5,446 @@
 
 {% block content %}
    {% include 'base/settingButton.html' %}
+    <form method='post' action="." enctype="multipart/form-data">{% csrf_token %}
 
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="panel panel-color panel-default-site">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Informazioni Personali</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <p class="-align-left">I campi contrassegnati da * sono
+                                                            obbligatori</p>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        {{ form.id }}
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-6">
+                                                        <b>{{ form.denominazione.label }}</b>
+                                                        {{ form.denominazione }}
+                                                        <div id="error-log">
+                                                            <strong>{{ form.denominazione.errors }}</strong></div>
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                        <b>{{ form.user.label }}</b>
+                                                        {{ form.user }}
+                                                        <div id="error-log"><strong>{{ form.user.errors }}</strong>
+                                                        </div>
 
-   <form method='post' action="." enctype="multipart/form-data">{% csrf_token %}
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="panel panel-color panel-default-site">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Informazioni Personali</h3>
-                            </div>
+                                                    </div>
+                                                    <div class="col-xs-3 m-b-15">
+                                                        <div class="checkbox checkbox-custom">
 
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <p class="-align-left">I campi contrassegnati da * sono obbligatori</p>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                        {{ form.id }}
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <b>{{ form.denominazione.label}}</b>
-                                            {{ form.denominazione }}
-                                            <div id="error-log"><strong>{{ form.denominazione.errors }}</strong></div>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <b>{{ form.user.label}}</b>
-                                            {{ form.user }}
-                                            <div id="error-log"><strong>{{ form.user.errors }}</strong></div>
+                                                            <input {% if form.ditta.value %} checked=checked {% endif %}
+                                                                                             id="checkbox-signup"
+                                                                                             type="checkbox"
+                                                                                             name="ditta"/>
+                                                            <label for="checkbox-signup">
+                                                                <b>{{ form.ditta.label }}</b>
+                                                            </label>
 
-                                        </div>
-                                        <div class="col-xs-3 m-b-15">
-                                            <div class="checkbox checkbox-custom">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </br>
+                                                <script>
+                                                    $(document).ready(function () {
 
-                                                <input {% if form.ditta.value %} checked=checked {% endif %}
-                                                                                id="checkbox-signup" type="checkbox"
-                                                                                name="ditta"/>
-                                                <label for="checkbox-signup">
-                                                    <b>{{ form.ditta.label }}</b>
-                                                </label>
+                                                        if ($('#checkbox-signup').is(':checked')) {
+                                                            $('#name').hide();
+                                                        }
+                                                        $('#checkbox-signup').click(function () {
+                                                            if (!$('#checkbox-signup').is(':checked')) {
+                                                                $('#name').fadeIn();
+                                                            } else {
+                                                                $('#name').fadeOut();
+                                                            }
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </br>
-                                    <script>
-                                        $(document).ready(function() {
-
-                                            if($('#checkbox-signup').is(':checked')) {
-                                                $('#name').hide();
-                                            }
-                                            $('#checkbox-signup').click(function() {
-                                               if(!$('#checkbox-signup').is(':checked')){
-                                                   $('#name').fadeIn();
-                                               }else {
-                                                   $('#name').fadeOut();
-                                               }
-
-                                               });
-                                        });
-                                    </script>
-                                    <div class="row" id="name">
-                                        <div class="col-xs-6">
-                                            <b>{{ form.nome.label }}</b>
-                                            {{ form.nome|capfirst }}
-                                            <div id="error-log">{{ form.nome.errors }}</div>
-                                        </div>
-                                       <div class="col-xs-6">
-                                            <b>{{ form.cognome.label }}</b>
-                                            {{ form.cognome|capfirst }}
-                                            <div id="error-log">{{ form.cognome.errors }}</div>
-                                        </div>
-                                    </div>
-                                    </br>
-                                    <div class="row">
-                                        <div class="col-xs-3">
-                                            <b>{{ form.indirizzo.label }}</b>
-                                            {{ form.indirizzo }}
-                                            <div id="error-log"><strong>{{ form.indirizzo.errors }}</strong></div>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <b>{{ form.comune.label }}</b>
-                                            {{ form.comune }}
-                                            <div id="error-log"><strong>{{ form.comune.errors }}</strong></div>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <b>{{ form.citta.label }}</b>
-                                            {{ form.citta }}
-                                            <div id="error-log"><strong>{{ form.citta.errors }}</strong></div>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <b>{{ form.cap.label }}</b>
-                                            {{ form.cap }}
-                                            <div id="error-log"><strong>{{ form.cap.errors }}</strong></div>
-                                        </div>
-                                    </div>
-                                    </br>
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <b>{{ form.codice_ateco.label }}</b>
-                                            {{ form.codice_ateco }}
-                                            <div id="error-log"><strong>{{ form.codice_ateco.errors }}</strong></div>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <b>{{ form.numero_rea.label }}</b>
-                                            {{ form.numero_rea }}
-                                            <div id="error-log"><strong>{{ form.numero_rea.errors }}</strong></div>
-                                        </div>
-                                    </div>
-                                    </br>
-                                    <div class="row">
-                                        <div class="col-xs-4">
-                                            <b>{{ form.piva.label }}</b>
-                                            {{ form.piva }}
-                                            <div id="error-log"><strong>{{ form.piva.errors }}</strong></div>
-                                        </div>
-                                        <div class="col-xs-4">
-                                            <b>{{ form.cf.label }}</b>
-                                            {{ form.cf }}
-                                            <div id="error-log"><strong>{{ form.cf.errors }}</strong></div>
-                                        </div>
-                                        <div class="col-xs-4">
-                                            <b>{{ form.pec.label }}</b>
-                                            {{ form.pec }}
-                                            <div id="error-log"><strong>{{ form.pec.errors }}</strong></div>
-                                        </div>
-                                    </div>
-                                    </br>
-                                    <div class="row">
-                                        <div class="col-xs-4">
-                                            <b>{{ form.telefonoFisso1.label }}</b>
-                                            {{ form.telefonoFisso1 }}
-                                            {{ form.telefonoFisso1.help_text }}
-                                            <div id="error-log"><strong>{{ form.telefonoFisso1.errors }}</strong></div>
-                                        </div>
-                                       <div class="col-xs-4">
-                                            <b>{{ form.cellulare1.label }}</b>
-                                            {{ form.cellulare1 }}
-                                            {{ form.cellulare1.help_text }}
-                                            <div id="error-log"><strong>{{ form.cellulare1.errors }}</strong></div>
-                                        </div>
-                                        <div class="col-xs-4">
-                                            <b>{{ form.fax.label }}</b>
-                                            {{ form.fax }}
-                                            {{ form.fax.help_text }}
-                                            <div id="error-log"><strong>{{ form.fax.errors }}</strong></div>
-                                        </div>
-                                    </div>
-                                    <script type="application/javascript">
-                                        $(document).ready(
-                                                $('#datepicker').datepicker()
-                                        )
-                                    </script>
-                                    </br>
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <b>{{ form.email.label }}</b>
-                                            {{ form.email }}
-                                            <div id="error-log"><strong>{{ form.email.errors }}</strong></div>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <b>{{ form.url_sito.label }}</b>
-                                            {{ form.url_sito }}
-                                            <div id="error-log"><strong>{{ form.url_sito.errors }}</strong></div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <b>{{ form.note.label }}</b>
-                                            {{ form.note }}
-                                            <div id="error-log">{{ form.note.errors }}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel panel-color panel-default-site">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Tipologia</h3>
-                            </div>
-
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <p class="-align-left">I campi contrassegnati da * sono obbligatori</p>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <b>{{ form.tipologia.label}}</b>
-                                            {{ form.tipologia }}
-                                            <div id="error-log"><strong>{{ form.tipologia.errors }}</strong></div>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <b>{{ form.tipologia_altro.label}}</b>
-                                            <div id="tipologia_altro">{{ form.tipologia_altro }}</div>
-                                            <div id="error-log"><strong>{{ form.tipologia_altro.errors }}</strong></div>
-                                        </div>
-                                    </div>
-                                    <script type="application/javascript">
-                                        $(document).ready(function() {
-                                            if($('#id_tipologia option:selected').val() == 13) {
-                                                    $('#id_tipologia_altro').prop('disabled', false)
-                                            } else {
-                                                $('#id_tipologia_altro').prop('disabled', true)
-                                            }
-
-                                            $('#id_tipologia').change(function(){
-                                                if($('#id_tipologia option:selected').val() == 13) {
-                                                    $('#id_tipologia_altro').val('{{ form.tipologia_altro.value }}');
-                                                    $('#id_tipologia_altro').removeAttr('disabled');
-
-                                                }else{
-                                                    $('#id_tipologia_altro').prop('disabled',true).val("");
-
-                                                }
-
-                                            });
-                                        });
-
-                                    </script>
-                                    </br>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel panel-color panel-default-site">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Compagine Sociale</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <p class="-align-left">I campi contrassegnati da * sono obbligatori</p>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-xs-3">
-                                            <b>{{ form.numero_dipendenti.label}}</b>
-                                            {{ form.numero_dipendenti }}
-                                            <div id="error-log">{{ form.numero_dipendenti.errors }}</div>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <b>{{ form.meno_di_35.label}}</b>
-                                            {{ form.meno_di_35 }}
-                                            <div id="error-log">{{ form.meno_di_35.errors }}</div>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <b>{{ form.donna_uomo.label}}</b>
-                                            {{ form.donna_uomo }}
-                                            <div id="error-log">{{ form.donna_uomo.errors }}</div>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <b>{{ form.donna_uomo_1.label}}</b>
-                                            {{ form.donna_uomo_1 }}
-                                            <div id="error-log">{{ form.donna_uomo_1.errors }}</div>
-                                        </div>
-                                    </div>
-                                    </br>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel panel-color panel-default-site">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Domande di Finanziamento</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <p class="-align-left">I campi contrassegnati da * sono obbligatori</p>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        {% if form.spese.errors %}
-                                            <div class="col-xs-12">
-                                              <div class="alert alert-danger alert-dismissable m-t-10" id="close">
-                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                                    <strong>{{ form.spese.errors }}</strong>
-                                              </div>
-                                             </div>
-                                        {% endif %}
-
-                                        {% for kin in form.spese %}
-                                            <div class="col-xs-3">
-                                                <div class="checkbox checkbox-custom m-b-15">
-                                                    {{ kin.tag }}
-                                                    <label for="{{ kin.id_for_label }}"><strong>{{ kin.choice_label }}</strong></label>
+                                                        });
+                                                    });
+                                                </script>
+                                                <div class="row" id="name">
+                                                    <div class="col-xs-6">
+                                                        <b>{{ form.nome.label }}</b>
+                                                        {{ form.nome|capfirst }}
+                                                        <div id="error-log">{{ form.nome.errors }}</div>
+                                                    </div>
+                                                    <div class="col-xs-6">
+                                                        <b>{{ form.cognome.label }}</b>
+                                                        {{ form.cognome|capfirst }}
+                                                        <div id="error-log">{{ form.cognome.errors }}</div>
+                                                    </div>
+                                                </div>
+                                                </br>
+                                                <div class="row">
+                                                    <div class="col-xs-3">
+                                                        <b>{{ form.indirizzo.label }}</b>
+                                                        {{ form.indirizzo }}
+                                                        <div id="error-log"><strong>{{ form.indirizzo.errors }}</strong>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                        <b>{{ form.comune.label }}</b>
+                                                        {{ form.comune }}
+                                                        <div id="error-log"><strong>{{ form.comune.errors }}</strong>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                        <b>{{ form.citta.label }}</b>
+                                                        {{ form.citta }}
+                                                        <div id="error-log"><strong>{{ form.citta.errors }}</strong>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                        <b>{{ form.cap.label }}</b>
+                                                        {{ form.cap }}
+                                                        <div id="error-log"><strong>{{ form.cap.errors }}</strong></div>
+                                                    </div>
+                                                </div>
+                                                </br>
+                                                <div class="row">
+                                                    <div class="col-xs-6">
+                                                        <b>{{ form.codice_ateco.label }}</b>
+                                                        {{ form.codice_ateco }}
+                                                        <div id="error-log">
+                                                            <strong>{{ form.codice_ateco.errors }}</strong></div>
+                                                    </div>
+                                                    <div class="col-xs-6">
+                                                        <b>{{ form.numero_rea.label }}</b>
+                                                        {{ form.numero_rea }}
+                                                        <div id="error-log">
+                                                            <strong>{{ form.numero_rea.errors }}</strong></div>
+                                                    </div>
+                                                </div>
+                                                </br>
+                                                <div class="row">
+                                                    <div class="col-xs-4">
+                                                        <b>{{ form.piva.label }}</b>
+                                                        {{ form.piva }}
+                                                        <div id="error-log"><strong>{{ form.piva.errors }}</strong>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-4">
+                                                        <b>{{ form.cf.label }}</b>
+                                                        {{ form.cf }}
+                                                        <div id="error-log"><strong>{{ form.cf.errors }}</strong></div>
+                                                    </div>
+                                                    <div class="col-xs-4">
+                                                        <b>{{ form.pec.label }}</b>
+                                                        {{ form.pec }}
+                                                        <div id="error-log"><strong>{{ form.pec.errors }}</strong></div>
+                                                    </div>
+                                                </div>
+                                                </br>
+                                                <div class="row">
+                                                    <div class="col-xs-4">
+                                                        <b>{{ form.telefonoFisso1.label }}</b>
+                                                        {{ form.telefonoFisso1 }}
+                                                        {{ form.telefonoFisso1.help_text }}
+                                                        <div id="error-log">
+                                                            <strong>{{ form.telefonoFisso1.errors }}</strong></div>
+                                                    </div>
+                                                    <div class="col-xs-4">
+                                                        <b>{{ form.cellulare1.label }}</b>
+                                                        {{ form.cellulare1 }}
+                                                        {{ form.cellulare1.help_text }}
+                                                        <div id="error-log">
+                                                            <strong>{{ form.cellulare1.errors }}</strong></div>
+                                                    </div>
+                                                    <div class="col-xs-4">
+                                                        <b>{{ form.fax.label }}</b>
+                                                        {{ form.fax }}
+                                                        {{ form.fax.help_text }}
+                                                        <div id="error-log"><strong>{{ form.fax.errors }}</strong></div>
+                                                    </div>
+                                                </div>
+                                                <script type="application/javascript">
+                                                    $(document).ready(
+                                                        $('#datepicker').datepicker()
+                                                    )
+                                                </script>
+                                                </br>
+                                                <div class="row">
+                                                    <div class="col-xs-6">
+                                                        <b>{{ form.email.label }}</b>
+                                                        {{ form.email }}
+                                                        <div id="error-log"><strong>{{ form.email.errors }}</strong>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-6">
+                                                        <b>{{ form.url_sito.label }}</b>
+                                                        {{ form.url_sito }}
+                                                        <div id="error-log"><strong>{{ form.url_sito.errors }}</strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <b>{{ form.note.label }}</b>
+                                                        {{ form.note }}
+                                                        <div id="error-log">{{ form.note.errors }}</div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        {% endfor %}
-                                        <div class="col-xs-12 pull-left m-b-15">
-                                            <b>{{ form.spese_altro.label }}</b>
-                                            {{ form.spese_altro }}
-                                            <div id="error-log">{{ form.spese_altro.errors }}</div>
-                                        </div>
-                                        <script type="application/javascript">
-                                            $('document').ready(function(){
-                                               if(!$('#id_spese_11').is(':checked')) {
-                                                    $('#id_spese_altro').prop('disabled',true);
-                                                }else {
-                                                   $('#id_spese_altro').prop('disabled',false);
-                                               }
-                                               $('#id_spese_11').click(function(){
-                                                   if($('#id_spese_11').is(':checked')){
-                                                        $('#id_spese_altro').val('{{ form.spese_altro.value }}');
-                                                        $('#id_spese_altro').prop('disabled',false);
-
-                                                   }else{
-                                                       $('#id_spese_altro').prop('disabled',true);
-                                                       $('#id_spese_altro').val("");
-                                                   }
-                                               });
-                                            });
-                                        </script>
-                                        </br>
-                                        <div class="col-xs-12 pull-left m-b-15">
-                                            <b>{{ form.tipologia_richiesta.label }}</b>
-                                            {{ form.tipologia_richiesta }}
-                                            <div id="error-log">{{ form.tipologia_richiesta.errors }}</div>
                                         </div>
                                     </div>
-
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <b>{{ form.note_1.label}}</b>
-                                            {{ form.note_1 }}
-                                            <p>{{ form.note_1.help_text }}</p>
-                                            <div id="error-log">{{ form.note_1.errors }}</div>
-                                        </div>
-                                    </div>
-                                    </br>
-                                </div>
-                            </div>
-                        </div>
-                        {% if request.user.is_superuser %}
-                        <div class="panel panel-color panel-default-site">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Da Compilare a cura di ProEurope</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="form-group">
-                               <div class="row">
-                                        <div class="col-xs-12">
-                                            <b>{{ form.Procedure_1.label}}</b>
-                                            {{ form.Procedure_1 }}
-                                            <div id="error-log">{{ form.Procedure_1.errors }}</div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <b>{{ form.Procedure_2.label}}</b>
-                                            {{ form.Procedure_2 }}
-                                            <div id="error-log">{{ form.Procedure_2.errors }}</div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <b>{{ form.Procedure_3.label}}</b>
-                                            {{ form.Procedure_3 }}
-                                            <div id="error-log">{{ form.Procedure_3.errors }}</div>
-                                        </div>
-                                    </div>
-                                    </br>
-                                </div>
-                            </div>
-                        </div>
-                        {% endif %}
-                        <div class="panel panel-color panel-default-site">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Allegati</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-xs-12 m-b-10">
-                                            <p class="-align-left">I File possono possono avere estensioni <strong>'jpg',
-                                                'doc', 'pdf','xlsx'</strong>
+                                    <div class="panel panel-color panel-default-site">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Tipologia</h3>
                                         </div>
 
-                                        <div class="col-xs-6">
-                                            <b>{{ form.doc.label }}</b>
-                                            <input disabled='disable' class="form-control" id="take_name">
-                                            <div id="error-log"><strong>{{ form.doc.errors }}</strong></div>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <div class="fileupload btn btn-primary" style="position: relative; overflow: hidden; margin: 22px">
-                                                <span>Upload</span>
-                                                <input type="file" class="upload" name="doc" id="id_doc">
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <p class="-align-left">I campi contrassegnati da * sono
+                                                            obbligatori</p>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-xs-6">
+                                                        <b>{{ form.tipologia.label }}</b>
+                                                        {{ form.tipologia }}
+                                                        <div id="error-log"><strong>{{ form.tipologia.errors }}</strong>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-6">
+                                                        <b>{{ form.tipologia_altro.label }}</b>
+                                                        <div id="tipologia_altro">{{ form.tipologia_altro }}</div>
+                                                        <div id="error-log">
+                                                            <strong>{{ form.tipologia_altro.errors }}</strong></div>
+                                                    </div>
+                                                </div>
+                                                <script type="application/javascript">
+                                                    $(document).ready(function () {
+                                                        if ($('#id_tipologia option:selected').val() == 13) {
+                                                            $('#id_tipologia_altro').prop('disabled', false)
+                                                        } else {
+                                                            $('#id_tipologia_altro').prop('disabled', true)
+                                                        }
+
+                                                        $('#id_tipologia').change(function () {
+                                                            if ($('#id_tipologia option:selected').val() == 13) {
+                                                                $('#id_tipologia_altro').val('{{ form.tipologia_altro.value }}');
+                                                                $('#id_tipologia_altro').removeAttr('disabled');
+
+                                                            } else {
+                                                                $('#id_tipologia_altro').prop('disabled', true).val("");
+
+                                                            }
+
+                                                        });
+                                                    });
+
+                                                </script>
+                                                </br>
                                             </div>
                                         </div>
-                                            <script>
-                                            $(document).ready(function(){
-                                               Btn('id_doc','take_name')
-                                            });
-                                            </script>
                                     </div>
-                                    </br>
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <b>{{ form.cf_doc.label }}</b>
-                                            <input disabled='disable' class="form-control" id="take_name_cf">
-                                            <div id="error-log"><strong>{{ form.cf_doc.errors }}</strong></div>
+                                    <div class="panel panel-color panel-default-site">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Compagine Sociale</h3>
                                         </div>
-                                        <div class="col-xs-6">
-                                            <div class="fileupload btn btn-primary" style="position: relative; overflow: hidden; margin: 22px">
-                                                <span>Upload</span>
-                                                <input type="file" class="upload" name="cf_doc" id="id_cf_doc">
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <p class="-align-left">I campi contrassegnati da * sono
+                                                            obbligatori</p>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-xs-3">
+                                                        <b>{{ form.numero_dipendenti.label }}</b>
+                                                        {{ form.numero_dipendenti }}
+                                                        <div id="error-log">{{ form.numero_dipendenti.errors }}</div>
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                        <b>{{ form.meno_di_35.label }}</b>
+                                                        {{ form.meno_di_35 }}
+                                                        <div id="error-log">{{ form.meno_di_35.errors }}</div>
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                        <b>{{ form.donna_uomo.label }}</b>
+                                                        {{ form.donna_uomo }}
+                                                        <div id="error-log">{{ form.donna_uomo.errors }}</div>
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                        <b>{{ form.donna_uomo_1.label }}</b>
+                                                        {{ form.donna_uomo_1 }}
+                                                        <div id="error-log">{{ form.donna_uomo_1.errors }}</div>
+                                                    </div>
+                                                </div>
+                                                </br>
                                             </div>
                                         </div>
-                                            <script>
-                                            $(document).ready(function(){
-                                               Btn('id_cf_doc','take_name_cf')
-                                            });
-                                            </script>
                                     </div>
-                                    </br>
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <b>{{ form.attrribuzione_pi.label }}</b>
-                                            <input disabled='disable' class="form-control" id="take_name_pi">
-                                            <div id="error-log"><strong>{{ form.attrribuzione_pi.errors }}</strong></div>
+                                    <div class="panel panel-color panel-default-site">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Domande di Finanziamento</h3>
                                         </div>
-                                        <div class="col-xs-6">
-                                            <div class="fileupload btn btn-primary" style="position: relative; overflow: hidden; margin: 22px">
-                                                <span>Upload</span>
-                                                <input type="file" class="upload" name="attrribuzione_pi" id="id_attrribuzione_pi">
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <p class="-align-left">I campi contrassegnati da * sono
+                                                            obbligatori</p>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    {% if form.spese.errors %}
+                                                        <div class="col-xs-12">
+                                                            <div class="alert alert-danger alert-dismissable m-t-10"
+                                                                 id="close">
+                                                                <button type="button" class="close" data-dismiss="alert"
+                                                                        aria-hidden="true">×
+                                                                </button>
+                                                                <strong>{{ form.spese.errors }}</strong>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+
+                                                    {% for kin in form.spese %}
+                                                        <div class="col-xs-3">
+                                                            <div class="checkbox checkbox-custom m-b-15">
+                                                                {{ kin.tag }}
+                                                                <label for="{{ kin.id_for_label }}"><strong>{{ kin.choice_label }}</strong></label>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                    <div class="col-xs-12 pull-left m-b-15">
+                                                        <b>{{ form.spese_altro.label }}</b>
+                                                        {{ form.spese_altro }}
+                                                        <div id="error-log">{{ form.spese_altro.errors }}</div>
+                                                    </div>
+                                                    <script type="application/javascript">
+                                                        $('document').ready(function () {
+                                                            if (!$('#id_spese_11').is(':checked')) {
+                                                                $('#id_spese_altro').prop('disabled', true);
+                                                            } else {
+                                                                $('#id_spese_altro').prop('disabled', false);
+                                                            }
+                                                            $('#id_spese_11').click(function () {
+                                                                if ($('#id_spese_11').is(':checked')) {
+                                                                    $('#id_spese_altro').val('{{ form.spese_altro.value }}');
+                                                                    $('#id_spese_altro').prop('disabled', false);
+
+                                                                } else {
+                                                                    $('#id_spese_altro').prop('disabled', true);
+                                                                    $('#id_spese_altro').val("");
+                                                                }
+                                                            });
+                                                        });
+                                                    </script>
+                                                    </br>
+                                                    <div class="col-xs-12 pull-left m-b-15">
+                                                        <b>{{ form.tipologia_richiesta.label }}</b>
+                                                        {{ form.tipologia_richiesta }}
+                                                        <div id="error-log">{{ form.tipologia_richiesta.errors }}</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <b>{{ form.note_1.label }}</b>
+                                                        {{ form.note_1 }}
+                                                        <p>{{ form.note_1.help_text }}</p>
+                                                        <div id="error-log">{{ form.note_1.errors }}</div>
+                                                    </div>
+                                                </div>
+                                                </br>
                                             </div>
                                         </div>
-                                            <script>
-                                            $(document).ready(function(){
-                                               Btn('id_attrribuzione_pi','take_name_pi')
-                                            });
-                                            </script>
                                     </div>
-                                    </br>
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <b>{{ form.certificato_camerale.label }}</b>
-                                            <input disabled='disable' class="form-control" id="take_name_cam">
-                                            <div id="error-log"><strong>{{ form.certificato_camerale.errors }}</strong></div>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <div class="fileupload btn btn-primary" style="position: relative; overflow: hidden; margin: 22px">
-                                                <span>Upload</span>
-                                                <input type="file" class="upload" name="certificato_camerale" id="id_certificato_camerale">
+                                    {% if request.user.is_superuser %}
+                                        <div class="panel panel-color panel-default-site">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">Da Compilare a cura di ProEurope</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <b>{{ form.Procedure_1.label }}</b>
+                                                            {{ form.Procedure_1 }}
+                                                            <div id="error-log">{{ form.Procedure_1.errors }}</div>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <b>{{ form.Procedure_2.label }}</b>
+                                                            {{ form.Procedure_2 }}
+                                                            <div id="error-log">{{ form.Procedure_2.errors }}</div>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <b>{{ form.Procedure_3.label }}</b>
+                                                            {{ form.Procedure_3 }}
+                                                            <div id="error-log">{{ form.Procedure_3.errors }}</div>
+                                                        </div>
+                                                    </div>
+                                                    </br>
+                                                </div>
                                             </div>
                                         </div>
-                                            <script>
-                                            $(document).ready(function(){
-                                               Btn('id_certificato_camerale','take_name_cam')
-                                            });
-                                            </script>
-                                    </div>
-                                    </br>
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <b>{{ form.visura_camerale.label }}</b>
-                                            <input disabled='disable' class="form-control" id="take_name_cam_vis">
-                                            <div id="error-log"><strong>{{ form.visura_camerale.errors }}</strong></div>
+                                    {% endif %}
+                                        <div class="row">
+                                        <div class="col-xs-12">
+                                            <button type="submit" id="submit-save"
+                                                    class="btn btn-custom btn-rounded waves-effect waves-success">
+                                                Salva Azienda
+                                            </button>
                                         </div>
-                                        <div class="col-xs-6">
-                                            <div class="fileupload btn btn-primary" style="position: relative; overflow: hidden; margin: 22px">
-                                                <span>Upload</span>
-                                                <input type="file" class="upload" name="visura_camerale" id="id_visura_camerale_visura">
-                                            </div>
-                                        </div>
-                                            <script>
-                                            $(document).ready(function(){
-                                               Btn('id_visura_camerale_visura','take_name_cam_vis')
-                                            });
-                                            </script>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <b>{{ form.contratto.label }}</b>
-                                            <input disabled='disable' class="form-control" id="take_name_cont">
-                                            <div id="error-log"><strong>{{ form.contratto.errors }}</strong></div>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <div class="fileupload btn btn-primary" style="position: relative; overflow: hidden; margin: 22px">
-                                                <span>Upload</span>
-                                                <input type="file" class="upload" name="contratto" id="id_contratto">
-                                            </div>
-                                        </div>
-                                            <script>
-                                            $(document).ready(function(){
-                                               Btn('id_contratto','take_name_cont')
-                                            });
-                                            </script>
-                                    </div>
-                                    </br>
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <b>{{ form.preventivi.label }}</b>
-                                            <input disabled='disable' class="form-control" id="take_name_prev">
-                                            <div id="error-log"><strong>{{ form.preventivi.errors }}</strong></div>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <div class="fileupload btn btn-primary" style="position: relative; overflow: hidden; margin: 22px">
-                                                <span>Upload</span>
-                                                <input type="file" class="upload" name="preventivi" id="id_preventivi">
-                                            </div>
-                                        </div>
-                                            <script>
-                                            $(document).ready(function(){
-                                               Btn('id_preventivi','take_name_prev')
-                                            });
-                                            </script>
-                                    </div>
-                                    </br>
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <b>{{ form.mod_unico_anno_prec.label }}</b>
-                                            <input disabled='disable' class="form-control" id="take_name_mod">
-                                            <div id="error-log"><strong>{{ form.mod_unico_anno_prec.errors }}</strong></div>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <div class="fileupload btn btn-primary" style="position: relative; overflow: hidden; margin: 22px">
-                                                <span>Upload</span>
-                                                <input type="file" class="upload" name="mod_unico_anno_prec" id="id_mod_unico_anno_prec">
-                                            </div>
-                                        </div>
-                                            <script>
-                                            $(document).ready(function(){
-                                               Btn('id_mod_unico_anno_prec','take_name_mod')
-                                            });
-                                            </script>
-                                    </div>
-                                    </br>
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <b>{{ form.mod_unico_anno_prec_2.label }}</b>
-                                            <input disabled='disable' class="form-control" id="take_name_mod2">
-                                            <div id="error-log"><strong>{{ form.mod_unico_anno_prec_2.errors }}</strong></div>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <div class="fileupload btn btn-primary" style="position: relative; overflow: hidden; margin: 22px">
-                                                <span>Upload</span>
-                                                <input type="file" class="upload" name="mod_unico_anno_prec_2" id="id_mod_unico_anno_prec_2">
-                                            </div>
-                                        </div>
-                                            <script>
-                                            $(document).ready(function(){
-                                               Btn('id_mod_unico_anno_prec_2','take_name_mod2')
-                                            });
-                                            </script>
-                                    </div>
-                                    </br>
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <b>{{ form.bilancio_ultimi_2.label }}</b>
-                                            <input disabled='disable' class="form-control" id="take_name_bil2">
-                                            <div id="error-log"><strong>{{ form.bilancio_ultimi_2.errors }}</strong></div>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <div class="fileupload btn btn-primary" style="position: relative; overflow: hidden; margin: 22px">
-                                                <span>Upload</span>
-                                                <input type="file" class="upload" name="bilancio_ultimi_2" id="id_bilancio_ultimi_2">
-                                            </div>
-                                        </div>
-                                            <script>
-                                            $(document).ready(function(){
-                                               Btn('id_bilancio_ultimi_2','take_name_bil2')
-                                            });
-                                            </script>
-                                    </div>
-                                    </br>
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <b>{{ form.bilancio_anno_corso.label }}</b>
-                                            <input disabled='disable' class="form-control" id="take_name_bil">
-                                            <div id="error-log"><strong>{{ form.bilancio_anno_corso.errors }}</strong></div>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <div class="fileupload btn btn-primary" style="position: relative; overflow: hidden; margin: 22px">
-                                                <span>Upload</span>
-                                                <input type="file" class="upload" name="bilancio_anno_corso" id="id_bilancio_anno_corso">
-                                            </div>
-                                        </div>
-                                            <script>
-                                            $(document).ready(function(){
-                                               Btn('id_bilancio_anno_corso','take_name_bil')
-                                            });
-                                            </script>
-                                    </div>
-                                    </br>
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <b>{{ form.attestati.label }}</b>
-                                            <input disabled='disable' class="form-control" id="take_name_att">
-                                            <div id="error-log"><strong>{{ form.attestati.errors }}</strong></div>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <div class="fileupload btn btn-primary" style="position: relative; overflow: hidden; margin: 22px">
-                                                <span>Upload</span>
-                                                <input type="file" class="upload" name="attestati" id="id_attestati">
-                                            </div>
-                                        </div>
-                                            <script>
-                                            $(document).ready(function(){
-                                               Btn('id_attestati','take_name_att')
-                                            });
-                                            </script>
-                                    </div>
-                                     </br>
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <b>{{ form.allegati_autocertificazione.label }}</b>
-                                            <input disabled='disable' class="form-control" id="take_name_aut">
-                                            <div id="error-log"><strong>{{ form.allegati_autocertificazione.errors }}</strong></div>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <div class="fileupload btn btn-primary" style="position: relative; overflow: hidden; margin: 22px">
-                                                <span>Upload</span>
-                                                <input type="file" class="upload" name="allegati_autocertificazione" id="id_allegati_autocertificazione">
-                                            </div>
-                                        </div>
-                                            <script>
-                                            $(document).ready(function(){
-                                               Btn('id_allegati_autocertificazione','take_name_aut')
-                                            });
-                                            </script>
-                                    </div>
-                                     </br>
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <b>{{ form.altri_allegati.label }}</b>
-                                            <input disabled='disable' class="form-control" id="take_name_alt">
-                                            <div id="error-log"><strong>{{ form.altri_allegati.errors }}</strong></div>
-                                            <div id="m-t-help_text" style="margin-left: 0px"><strong>{{ form.altri_allegati.help_text }}</strong></div>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <div class="fileupload btn btn-primary" style="position: relative; overflow: hidden; margin: 22px">
-                                                <span>Upload</span>
-                                                <input type="file" class="upload" name="altri_allegati" multiple id="id_altri_allegati">
-                                            </div>
-                                        </div>
-                                            <script>
-                                            $(document).ready(function(){
-                                               Btn('id_altri_allegati','take_name_alt')
-                                            });
-                                            </script>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <button type="submit" class="btn btn-custom btn-rounded waves-effect waves-success">
-                                    Salva Azienda
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-       </div>
-    </form>
+
+                    </form>
+{% endblock %}
+{% block js %}
+    <script>
+    $(document).ready()
+
+    {        function checkInput() {
+            var isValid = true;
+            $('input').filter('[required]').each(function() {
+                if($(this).val() === "") {
+                    $('#submit-save').prop('disabled', true);
+                    isValid = false;
+                    return false;
+                }
+                if(isValid) {
+                    $('#submit-save').prop('disabled', false)
+                }
+                return isValid;
+            })
+
+        }
+
+        $('input').filter('[required]').on('keyup',function() {
+        checkInput()
+        });
+
+        checkInput()
+    }
+    </script>
+
 {% endblock %}

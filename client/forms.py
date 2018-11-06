@@ -14,8 +14,6 @@ class pro(ITVatNumberField):
 class clientForm(forms.ModelForm):
 
 
-
-
     tipologia_beneficiario = (
         ('1','Associazione'),
         ('2','Onlus'),
@@ -52,7 +50,6 @@ class clientForm(forms.ModelForm):
         ('2','Finanziamento a Tasso Agevolato'),
         ('3','Garanzia '),
     )
-
 
     denominazione = forms.CharField(label='Nome Azienda*',max_length=255,widget=forms.TextInput(attrs={'class':'form-control','id':'state-success','for':'state-success'}))
     nome = forms.CharField(label='Nome',label_suffix='N',max_length=255,required=False,widget=forms.TextInput(attrs={'class':'form-control'}))
@@ -183,6 +180,13 @@ class clientForm(forms.ModelForm):
                                      queryset=UserProfile.objects.all(),
                                               widget=forms.Select(attrs={'class':'form-control'} )
         )
+
+
+class attachedClientForm(forms.Form):
+    nome_allegato = forms.CharField(label='Nome Allegato',required=False, error_messages={'required':'Il campo non può essere vuoto'})
+    allegato = forms.FileField(label='Aggiungi Allegato', required=True, error_messages={'required':'Il campo non può essere vuoto'},)
+
+
 
 
 
