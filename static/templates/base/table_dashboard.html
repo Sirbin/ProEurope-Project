@@ -6,7 +6,7 @@
                                 <th>Collaboratore</th>
                                 <th>Numero Rea</th>
 {#                                <th>Numero Allegati <span class="badge badge-success">{{ totali }}</span></th>#}
-                                <th>Stato</th>
+{#                                <th>Stato</th>#}
 {#                                <th>Completato</th>#}
                             </tr>
                             </thead>
@@ -20,15 +20,15 @@
                                         <td>{{ client.user }}</td>
                                         <td>{{ client.numero_rea }}</td>
 {#                                        <td class="totali">{% for key,value in numero_allegati.items  %}{% if key == client.denominazione %}Totali Inseriti <span id="totali{{ client.pk }}" value="{{ value }}" class="badge badge-danger">{{ value }}</span>{% endif %}{% endfor %}</td>#}
-                                        <td class='stato' name="stato{{ client.pk }}" id="stato{{ client.pk }}">
-                                            {% for key,value in numero_allegati.items  %}
-                                                {% if key == client.denominazione %}
-                                                    {% if value == 0 %}<span class="label label-danger">In Attesa</span>{% endif %}
-                                                    {% if value >= 1 %}<span class="label label-warning">In Progresso</span>{% endif %}
-                                                    {% if value == total %}<span class="label label-success">Terminato</span>{% endif %}
-                                                {% endif %}
-                                            {% endfor %}
-                                        </td>
+{#                                        <td class='stato' name="stato{{ client.pk }}" id="stato{{ client.pk }}">#}
+{#                                            {% for key,value in numero_allegati.items  %}#}
+{#                                                {% if key == client.denominazione %}#}
+{#                                                    {% if value == 0 %}<span class="label label-danger">In Attesa</span>{% endif %}#}
+{#                                                    {% if value >= 1 %}<span class="label label-warning">In Progresso</span>{% endif %}#}
+{#                                                    {% if value == total %}<span class="label label-success">Terminato</span>{% endif %}#}
+{#                                                {% endif %}#}
+{#                                            {% endfor %}#}
+{#                                        </td>#}
 {#                                        {% if client.is_completated %}#}
 {#                                                <td><div class="checkbox checkbox-primary checkbox-single"><input {% if not request.user.is_superuser %} disabled=disabled {% endif %} class="check_complete" id_name='{{ client.id }}'  name="check_{{ client.id }}" value="{{ client.is_complete }}" checked="checked" id="singleCheckbox2_{{ client.id }}" type="checkbox"/><label></label></div></td>#}
 {#                                        {% else %}#}
