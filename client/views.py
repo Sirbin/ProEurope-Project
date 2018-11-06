@@ -46,6 +46,7 @@ class clientCreate(LoginandPermissionMixin,CreateView,SingleObjectMixin):
         kwargs = super(clientCreate, self).get_form_kwargs()
         kwargs['username'] = self.request.user.username
         kwargs['group'] = self.mio_groups
+        print('ciao')
         return kwargs
 
 
