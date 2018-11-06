@@ -9,7 +9,8 @@ from user.forms import FormLogin,FormPassChange,SetPassword
 import user.views
 
 #Base
-from user.views import userList,userEdit,userDelete,userCreate,ProfileOnlyEdit,userChangePassword,DashboardUser,userDel,api_get_check_user, api_get_uncheck_user
+from user.views import userList,userEdit,userDelete,userCreate,ProfileOnlyEdit,userChangePassword,\
+    DashboardUser,userDel,api_get_check_user, api_get_uncheck_user
 
 from client.views import clientCreate,clientList,clientDelete,clientAttach,clientDel,\
     clientUpdate,zipAllattch, clientAttached, getNameAttach, delNameAttach

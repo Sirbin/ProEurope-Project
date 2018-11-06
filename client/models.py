@@ -205,6 +205,17 @@ class ClientUserCompany(models.Model,CreateFolderUser):
         ('12','Altro'),
     )
 
+    stato_pratica = (
+        ('1','In Attesa di Documenti'),
+        ('2','Istruttoria'),
+        ('3','Banca'),
+        ('4','Non Finanziabile'),
+        ('5','Rinuncia'),
+        ('6','Completa')
+    )
+
+
+
     denominazione = models.CharField(verbose_name='Denominazioe Ditta',max_length=255)
     is_complete = models.BooleanField(verbose_name="Pratica Comletata", default=False)
     ditta = models.BooleanField(verbose_name="Società",default=True)

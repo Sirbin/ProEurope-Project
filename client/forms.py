@@ -51,7 +51,6 @@ class clientForm(forms.ModelForm):
         ('3','Garanzia '),
     )
 
-
     denominazione = forms.CharField(label='Nome Azienda*',max_length=255,widget=forms.TextInput(attrs={'class':'form-control','id':'state-success','for':'state-success'}))
     nome = forms.CharField(label='Nome',label_suffix='N',max_length=255,required=False,widget=forms.TextInput(attrs={'class':'form-control'}))
     cognome = forms.CharField(label='Cognome',label_suffix='C',max_length=255,required=False,widget=forms.TextInput(attrs={'class':'form-control'}))

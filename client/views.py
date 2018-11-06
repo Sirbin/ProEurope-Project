@@ -23,6 +23,8 @@ class clientAttached(LoginandPermissionMixin,FormView):
 
       form_class = attachedClientForm
 
+      f = CreateFolderUser()
+
       def dispatch(self, request, *args, **kwargs):
 
           self.get_denominazione = ClientUserCompany.objects.get(pk=self.kwargs.get('pk'))
@@ -30,6 +32,10 @@ class clientAttached(LoginandPermissionMixin,FormView):
           return super(clientAttached,self).dispatch(request,args,kwargs)
 
       def form_valid(self, form):
+
+          if not self.f.exists_file(str(self.get_denominazione)):
+              f = CreateFolderUser()
+              f.create_folder(name=str(self.get_denominazione))
           nome_file = self.request.POST.get('nome_allegato',"")
           CreateFolderUser.save_file_denominazione(self.request.FILES['allegato'],nome_file,CreateFolderUser.path_create, str(self.get_denominazione))
 
@@ -40,11 +46,16 @@ class clientAttached(LoginandPermissionMixin,FormView):
               Recupera i file al'interno della cartella del Cliente
           '''
 
-          analytics_list = os.listdir(os.path.join(CreateFolderUser.path_create,str(self.get_denominazione)))
+          try:
+            analytics_list = os.listdir(os.path.join(CreateFolderUser.path_create,str(self.get_denominazione)))
+          except:
+              analytics_list = []
+
           c = super(clientAttached, self).get_context_data(**kwargs)
           c['allegato'] = analytics_list
           c['id'] = self.kwargs.get('pk')
           c['set'] = settings.MEDIA_ROOT
+          c['user'] = self.get_denominazione
 
           return c
 
@@ -155,7 +166,7 @@ class clientCreate(LoginandPermissionMixin,CreateView,SingleObjectMixin):
 
         messages.success(self.request,"L'utente è stato salvato con successo" )
 
-        return reverse('client_attach_new', kwargs={'pk':self.mypk.pk   })
+        return reverse('client_attach_new', kwargs={'pk':self.mypk.pk})
 
 class clientUpdate(LoginandPermissionMixin,UpdateView,CreateFolderUser):
 

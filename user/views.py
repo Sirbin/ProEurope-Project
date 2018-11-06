@@ -20,22 +20,6 @@ from azienda.models import Company
 import datetime
 
 
-# class prova(TemplateView,PermissionDenied):
-#       '''
-#       Semplice Prova da Cancellare
-#       '''
-#       login_url = reverse_lazy('userManagement')
-#
-#       template_name = 'base/index.html'
-#
-#       permission_denied_message = 'Errore'
-#
-#       permission_required = 'is_staff'
-#
-#       def get_context_data(self, **kwargs):
-#           contenxt = super(prova,self).get_context_data(**kwargs)
-#           contenxt['userlog'] = UserProfile.get_username(self.request.user)
-#           return contenxt
 
 @login_required()
 def dashboard(request):
@@ -177,19 +161,6 @@ class LoginandPermissionMixin(PermissionRequiredMixin):
      def has_permission(self):
          return super(LoginandPermissionMixin,self).has_permission()
 
-# class getFilterUserMixin(object):
-#
-#     '''
-#     Mixin per recuperare le liste degli utenti in base all'azineda di appartenenza
-#     da utilizzare per ogni lista.
-#     '''
-#
-#     def get_queryset(self):
-#          if not self.request.user.is_superuser:
-#             user_for_company = Company.objects.get(azienda_user__username=self.request.user.username)
-#             user_for_azi = UserProfile.objects.filter(azienda__denominazione=user_for_company.denominazione).exclude(username=self.request.user.username)
-#             return user_for_azi
-#          return super(getFilterUserMixin,self).get_queryset()
 
 class userList(LoginandPermissionMixin,getFilterUserMixin,ListView):
 
