@@ -7,7 +7,7 @@ django-mptt==0.8.6
 django-multiselectfield==0.1.4
 django-registration==2.1.2
 jsonfield==1.0.3
-Pillow==3.3.1
+Pillow==9.0.1
 psycopg2==2.6.2
 PyMySQL==0.7.7
 regex==2016.9.22
